@@ -23,9 +23,9 @@ case "oneday":
     if ($_REQUEST['date']) { 
         $date = date("Y-m-d",strtotime($_REQUEST['date']));
     }
-    else { $date = date("Y-m-d");
+    else { $date = date("Y-m-d"); }
     print ($libHours->GetHoursByDate($date,$format));
-    }
+    break;
 }
 
 if ($format = "xmlIthaca") {
