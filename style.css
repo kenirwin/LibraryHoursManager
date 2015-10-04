@@ -1,0 +1,77 @@
+#hours { 
+  width: 100%; 
+  border-collapse: collapse;
+ }
+
+#hours th { 
+  font-weight: bold; 
+}
+
+#hours td, #hours th { 
+  padding: 6px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+  min-width: 60px;
+}
+#hours td {
+    height: 75px;
+}
+
+#hours .hours_date {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#hours .hours_today {
+    background-color: LightSkyBlue;
+}
+
+#hours .closed {
+    background-color: silver;
+}
+
+#hours .day_of_week {
+    display: none;
+}
+
+
+@media (max-width: 719px) {
+
+    #hours tbody, #hours th, #hours td, #hours tr { 
+          display: block; 
+          }
+
+  #hours thead { 
+    display: none;
+  }
+
+  #hours tr { 
+    border: 1px solid #333; 
+  }
+
+  #hours td { 
+    border: none;
+    border-bottom: 1px dotted @gray; 
+    position: relative;
+    padding-left: 10%; 
+    height: auto;
+  }
+
+  #hours td.empty {
+    display: none;
+  }
+
+  #hours td.hours_box {
+    border-bottom: 1px dashed #333;
+  }
+
+  #hours .day_of_week {
+    display: block !important;
+  }
+  
+  /* Zebra striping */
+  #hours tr:nth-of-type(odd) { 
+    background: #ddd; 
+  }
+
+}
