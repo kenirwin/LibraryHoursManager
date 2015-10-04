@@ -1,23 +1,34 @@
 <?
 class Hours {
+    public $db;
 
-public function ListDailyHours ($format) {
-    $start = date("Y-m-d");
-    $end = $this->GetLastDate();
-    $date = $start; 
-    $output = "";
-    while ($date <= $end) {
-        if ($format == "xmlIthaca") {
-            $output .=  $this->GetHoursByDate($date, $format);
+    public function __construct() {
+        include_once ("config.php");
+        try { 
+            $this->db = new PDO("mysql:host=$hostname;dbname=$database;charset=$charset", "$username", "$password");
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $ex) {
+            echo $ex->getMessage();
         }
-        else {
-            $output .= $date . ": " . $this->GetHoursByDate($date) .'<br>'. PHP_EOL;
-        }
-        $date = date("Y-m-d", strtotime ($date . " + 1 day"));
     }
-    return $output;
-}
 
+    public function ListDailyHours ($format) {
+        $start = date("Y-m-d");
+        $end = $this->GetLastDate();
+        $date = $start; 
+        $output = "";
+        while ($date <= $end) {
+            if ($format == "xmlIthaca") {
+                $output .=  $this->GetHoursByDate($date, $format);
+            }
+            else {
+                $output .= $date . ": " . $this->GetHoursByDate($date) .'<br>'. PHP_EOL;
+            }
+            $date = date("Y-m-d", strtotime ($date . " + 1 day"));
+        }
+        return $output;
+    }
+    
 public function GetHoursByDate ($date, $format="text") {
     $q = "SELECT * FROM exceptions WHERE `date` = '$date'";
     $r = mysql_query($q);
@@ -63,10 +74,10 @@ public function GetHoursFromPreset($date) {
 
 public function GetLastDate () {
     $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
-    $r = mysql_query($q);
-    $myrow = mysql_fetch_row($r);
-    $date = $myrow[0];
-    return $date;
-}
+    $stmt = $this->db->query($q);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        return $row['last_date'];
+    }
+} 
 } 
 ?>
