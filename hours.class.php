@@ -43,24 +43,29 @@ public function GetHoursByDate ($date, $format="text") {
 }
 
 public function GetHoursFromPreset($date) {
+    $date = "2015-10-25";
+    
     $day_of_week = date("l", strtotime($date));
-    $q = "SELECT settings.* FROM settings,timeframes WHERE timeframes.first_date <= '$date' and timeframes.last_date >= '$date' and apply_preset_id = preset_id and day = '$day_of_week'";
-    $r = mysql_query($q);
-    if (mysql_num_rows($r) == 1) {
-        $myrow=mysql_fetch_assoc($r);
-        extract ($myrow);
-        if ($closed == "Y") {
+    $q = "SELECT settings.* FROM settings,timeframes WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and day = ?";
+    
+    $stmt = $this->db->prepare($q);
+    $stmt->execute(array($date,$date,$day_of_week));
+    
+    if ($stmt->rowCount() == 1) {
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($row['closed'] == "Y") {
             return "CLOSED";
-        }
-        else {
-            return "$opentime - $closetime";
+            }
+            else {
+                return $row['opentime'] . ' - '. $row['closetime'];
+            }
         }
     }
     else { 
         return ($q);
     }
 }
-
+    
 public function GetLastDate () {
     $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
     $r = mysql_query($q);
