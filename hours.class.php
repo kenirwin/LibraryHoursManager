@@ -54,8 +54,6 @@ public function GetHoursByDate ($date, $format="text") {
 }
 
 public function GetHoursFromPreset($date) {
-    $date = "2015-10-25";
-    
     $day_of_week = date("l", strtotime($date));
     $q = "SELECT settings.* FROM settings,timeframes WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and day = ?";
 
