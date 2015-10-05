@@ -30,16 +30,16 @@ class Hours {
     }
     
 public function GetHoursByDate ($date, $format="text") {
-    $q = "SELECT * FROM exceptions WHERE `date` = '$date'";
-    $r = mysql_query($q);
-    if (mysql_num_rows($r) == 1) {
-        $myrow = mysql_fetch_assoc($r);
-        extract($myrow);
-        if ($closed == "Y") {
+    $q = "SELECT * FROM exceptions WHERE `date` = ?";
+    $stmt = $this->db->prepare($q);
+    $stmt->execute(array($date));
+    if ($stmt->rowCount() == 1) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['closed'] == "Y") {
             $hours = "CLOSED";
         }
         else {
-            $hours = "$opentime - $closetime";
+            $hours = $row['opentime'] .' - '. $row['closetime'];
         }
     }
     else {
