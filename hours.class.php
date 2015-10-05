@@ -29,58 +29,71 @@ class Hours {
         return $output;
     }
     
-public function GetHoursByDate ($date, $format="text") {
-    $q = "SELECT * FROM exceptions WHERE `date` = ?";
-    $stmt = $this->db->prepare($q);
-    $stmt->execute(array($date));
-    if ($stmt->rowCount() == 1) {
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row['closed'] == "Y") {
-            $hours = "CLOSED";
-        }
-        else {
-            $hours = $row['opentime'] .' - '. $row['closetime'];
-        }
-    }
-    else {
-        $hours = $this->GetHoursFromPreset($date);
-    }
-    if ($format == "text") { 
-        return $hours;
-    }
-    elseif ($format == "xmlIthaca") {
-        return '<day date="'.$date.'">'.$hours.'</day>'.PHP_EOL;
-    }
-}
-
-public function GetHoursFromPreset($date) {
-    $day_of_week = date("l", strtotime($date));
-    $q = "SELECT settings.* FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
-
-    $stmt = $this->db->prepare($q);
-    $stmt->execute(array($date,$date,$day_of_week));
-
-    if ($stmt->rowCount() == 1) {
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    public function GetHoursByDate ($date, $format="text") {
+        $q = "SELECT * FROM exceptions WHERE `date` = ?";
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($date));
+        if ($stmt->rowCount() == 1) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($row['closed'] == "Y") {
-                return "CLOSED";
+                $hours = "CLOSED";
             }
             else {
-                return $row['opentime'] . ' - '. $row['closetime'];
+                $hours = $row['opentime'] .' - '. $row['closetime'];
             }
         }
+        else {
+            $hours = $this->GetHoursFromPreset($date);
+        }
+        if ($format == "text") { 
+            return $hours;
+        }
+        elseif ($format == "xmlIthaca") {
+            return '<day date="'.$date.'">'.$hours.'</day>'.PHP_EOL;
+        }
     }
-    else {
-        return ($q);
-    }
-}
     
-public function GetLastDate () {
-    $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
-    $stmt = $this->db->query($q);
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        return $row['last_date'];
+    public function GetHoursFromPreset($date) {
+        $day_of_week = date("l", strtotime($date));
+        $q = "SELECT settings.* FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
+        
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($date,$date,$day_of_week));
+        
+        if ($stmt->rowCount() == 1) {
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['closed'] == "Y") {
+                    return "CLOSED";
+                }
+                else {
+                    return $row['opentime'] . ' - '. $row['closetime'];
+                }
+            }
+        }
+        else {
+            return ($q);
+        }
     }
-} 
+    
+    public function GetLastDate () {
+        $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
+        $stmt = $this->db->query($q);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return $row['last_date'];
+        }
+    } 
+    
+    // JSON functions
+    
+    public function GetJSON ($table, $conditions=array()) {
+        $allowed = array('exceptions','presets','settings','timeframes');
+        if (in_array($table,$allowed)) {
+            $q = 'SELECT * FROM '.$table;
+            $stmt = $this->db->prepare($q);
+            $stmt->execute();
+            return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+        }
+    }
+
 } 
 ?>
