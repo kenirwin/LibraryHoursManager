@@ -1,5 +1,4 @@
 <?
-include ("config.php");
 include ("hours.class.php");
 
 if (isset($_REQUEST['format'])) {
