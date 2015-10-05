@@ -55,7 +55,7 @@ public function GetHoursByDate ($date, $format="text") {
 
 public function GetHoursFromPreset($date) {
     $day_of_week = date("l", strtotime($date));
-    $q = "SELECT settings.* FROM settings,timeframes WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and day = ?";
+    $q = "SELECT settings.* FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
 
     $stmt = $this->db->prepare($q);
     $stmt->execute(array($date,$date,$day_of_week));
