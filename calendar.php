@@ -1,7 +1,7 @@
 <?
-$page_title = "Thomas Library Hours";
-include ("/docs/lib/include/lib_top.html");
-include("/docs/lib/include/scripts.php");
+if (file_exists("./local_headers.php")) {
+    include ("local_headers.php");
+}
 ?>
       <link href="style.css" rel="stylesheet">
       <?php
@@ -126,4 +126,8 @@ $calendar.= "</tr></tbody></table></div>";
 echo $calendar;
 ?>
 
-<? include ("/docs/lib/include/lib_bottom.html"); ?>
+<? 
+if (file_exists("./local_footers.php")) {
+    include ("./local_footers.php"); 
+}
+?>
