@@ -20,10 +20,31 @@ EOT;
         print $table;
     }
 
-    public function EditPresetDetails ($details) {
-        return $details;
+    public function EditPresetDetails ($json) {
+        $details = json_decode($json);
+        print_r($details);
+        $table .= '<form id="presets-editor">'.PHP_EOL;
+        $table .= $this->FormRow('name', $details[0]->name, 'text');
+        $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
+        $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
+        $table .= $this->FormDays($details);
+        $table .= '</form>'.PHP_EOL;
+        return $table;
     }
 
+    private function FormRow($key, $value, $type) {
+        return $key.': <input type="'.$type.'" name="'.$key.'" value="'.$value.'" size="50"><br />'.PHP_EOL;
+    }
+
+    private function FormDays($arr) {
+        $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+        $table  = '<table>'.PHP_EOL;
+        foreach ($days as $day) {
+            // KEN START HERE NEXT
+        }
+        $table .= '</table>'.PHP_EOL;
+        return;
+    }
     /* Graphing functions */
 
     public function BuildGraphJS($timeframes, $exceptions) {
