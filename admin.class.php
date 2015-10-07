@@ -22,7 +22,7 @@ EOT;
 
     public function EditPresetDetails ($json) {
         $details = json_decode($json);
-        print_r($details);
+        //        print_r($details); print '<hr>'.PHP_EOL;
         $table .= '<form id="presets-editor">'.PHP_EOL;
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
@@ -39,12 +39,45 @@ EOT;
     private function FormDays($arr) {
         $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
         $table  = '<table>'.PHP_EOL;
+        $table .= '<tr><td>Day</td><td>Open Time</td></td><td>Close Time</td><td>Open Past Midnight</td><td>Closed</td></tr>'.PHP_EOL;
         foreach ($days as $day) {
-            // KEN START HERE NEXT
+            $table .= '<tr><td>'.$day.'</td>';
+            $table .= $this->FindDayValues($day, $arr);
+            $table .= '</tr>'.PHP_EOL;
+            $table .= '</tr>';
         }
         $table .= '</table>'.PHP_EOL;
-        return;
+        return $table;
     }
+
+    private function FindDayValues($day, $arr) {
+        foreach ($arr as $day_settings) {
+            if ($day_settings->day == $day) {
+                if ($day_settings->closed == 'Y') {
+                    $closed = '<input type="checkbox" name="closed['.$day_settings->day.']" checked />'.PHP_EOL;
+                }
+                else {
+                    $closed = '<input type="checkbox" name="closed['.$day_settings->day.']"/>'.PHP_EOL;
+                }
+
+                if ($day_settings->latenight == 'Y') {
+                    $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']" checked />'.PHP_EOL;
+                }
+                else {
+                    $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
+                }
+
+
+
+                return '<td><input type="text" name="opentime['.$day_settings->day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day_settings->day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+            }
+        }
+        // if day settings not found
+        $closed = '<input type="checkbox" name="closed['.$day_settings->day.']"/>'.PHP_EOL;
+        $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
+        return '<td><input type="text" name="opentime['.$day_settings->day.']" value=""></td><td><input type="text" name="closetime['.$day_settings->day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+    }
+
     /* Graphing functions */
 
     public function BuildGraphJS($timeframes, $exceptions) {
