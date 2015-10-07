@@ -4,8 +4,9 @@ include ("admin.class.php");
 
 $hours = new Hours();
 $times = $hours->GetTimeframesAndRanks();
+$exceptions = $hours->getJSON('exceptions');
 $admin = new HoursAdmin(); 
-$graphJS = $admin->BuildGraphJS($times);
+$graphJS = $admin->BuildGraphJS($times,$exceptions);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
@@ -18,7 +19,7 @@ $graphJS = $admin->BuildGraphJS($times);
 <body>
 
 	<div id="header">
-		<h2>Time Axes</h2>
+		<h2>Date Settings by Rank</h2>
 	</div>
 
 	<div id="content">

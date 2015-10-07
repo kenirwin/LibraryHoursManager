@@ -10,9 +10,9 @@ class HoursAdmin {
 	<script language="javascript" type="text/javascript" src="./flot/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="./flot/jquery.flot.time.js"></script>
 EOT;
-    public function BuildGraphJS($json) {
+    public function BuildGraphJS($timeframes, $exceptions) {
         $js  = $this->js_includes . PHP_EOL;
-        $vars = $this->DefineGraphVars($json);
+        $vars = $this->DefineGraphVars($timeframes,$exceptions);
         $js .= '<script type="text/javascript">'.PHP_EOL;
         $js .= '$(function() {'.PHP_EOL;
         $js .= $vars->vars;
@@ -27,10 +27,11 @@ EOT;
         return $js;
     }
 
-    private function DefineGraphVars($json) {
+    private function DefineGraphVars($timeframes, $exceptions) {
         $return = new stdClass();
         $all_graph_ids = array();
-        $times = json_decode($json);
+        $times = json_decode($timeframes);
+        $exes  = json_decode($exceptions);
         foreach ($times as $tf) {
             $tf->lineID = preg_replace("/[ ,:']+/","",$tf->name);
             $tf->varstring = 'var '.$tf->lineID.' = [['.$this->jsTime($tf->first_date).','. $tf->rank .'], ';
@@ -38,8 +39,16 @@ EOT;
             $return->vars .= $tf->varstring;
             array_push($all_graph_ids, $tf->lineID);
         }
+        foreach ($exes as $ex) {
+            $ex->lineID = 'Exception'.preg_replace("/-/","",$ex->date);
+            $ex->varstring = 'var '.$ex->lineID.' = [['.$this->jsTime($ex->date).',3]];'.PHP_EOL;
+            $return->vars .= $ex->varstring;
+            array_push($all_graph_ids, $ex->lineID);
+        }
+
         $return->idArray = '[' . join(',',$all_graph_ids) . ']';
         return $return;
+
     }
 
     
