@@ -103,7 +103,7 @@ class Hours {
     }
 
     public function GetPresetDetails ($id) {
-        $q = 'SELECT * FROM settings where preset_id = ?';
+        $q = 'SELECT * FROM settings,timeframes,presets where presets.id = settings.preset_id and apply_preset_id = presets.id and settings.preset_id = ?';
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($id));
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
