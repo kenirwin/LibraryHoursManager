@@ -95,5 +95,11 @@ class Hours {
         }
     }
 
+    public function GetTimeframesAndRanks () {
+        $q = 'SELECT * FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
+        $stmt = $this->db->prepare($q);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 } 
 ?>
