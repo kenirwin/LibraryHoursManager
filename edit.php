@@ -16,10 +16,20 @@ include ("admin.class.php");
 
 $hours = new Hours();
 $admin = new HoursAdmin(); 
-$times = $hours->GetTimeframesAndRanks();
-//$presets = $hours->getJSON('presets');
-$exceptions = $hours->getJSON('exceptions');
-$admin->PresetsPicker($times);
+
+if (isset($_REQUEST['action'])) {
+    switch ($_REQUEST['action']) {
+    case ('submit_preset_values'):
+        print_r($_REQUEST);
+        break;
+    }
+}
+else { 
+    $times = $hours->GetTimeframesAndRanks();
+    //$presets = $hours->getJSON('presets');
+    $exceptions = $hours->getJSON('exceptions');
+    $admin->PresetsPicker($times);
+}
 ?>
 <div id="preset-details"></div>
 

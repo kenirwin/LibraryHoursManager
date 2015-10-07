@@ -23,11 +23,13 @@ EOT;
     public function EditPresetDetails ($json) {
         $details = json_decode($json);
         //        print_r($details); print '<hr>'.PHP_EOL;
-        $table .= '<form id="presets-editor">'.PHP_EOL;
+        $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         $table .= $this->FormDays($details);
+        $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
+        $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
         return $table;
     }
