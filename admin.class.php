@@ -24,6 +24,7 @@ EOT;
         $details = json_decode($json);
         //        print_r($details); print '<hr>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;
+        $table .= $this->FormRow('preset_id', $details[0]->preset_id, 'hidden');
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
@@ -35,9 +36,15 @@ EOT;
     }
 
     private function FormRow($key, $value, $type) {
-        return $key.': <input type="'.$type.'" name="'.$key.'" value="'.$value.'" size="50"><br />'.PHP_EOL;
+        switch ($type) {
+        case ('text'):
+            return $key.': <input type="'.$type.'" name="'.$key.'" value="'.$value.'" size="50"><br />'.PHP_EOL;
+            break;
+        case ('hidden'):
+            return '<input type="'.$type.'" name="'.$key.'" value="'.$value.'" size="50">'.PHP_EOL;
+        }
     }
-
+    
     private function FormDays($arr) {
         $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
         $table  = '<table>'.PHP_EOL;
