@@ -101,5 +101,14 @@ class Hours {
         $stmt->execute();
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
+
+    public function GetPresetDetails ($id) {
+        $q = 'SELECT * FROM settings where preset_id = ?';
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($id));
+        return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+    }
 } 
+
+
 ?>

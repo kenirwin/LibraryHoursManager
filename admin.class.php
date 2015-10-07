@@ -1,15 +1,31 @@
 <?
 class HoursAdmin {
-    public $all_flot_ids = array();
-    public $all_flot_ids_str;
-
-    public $js_includes = <<<EOT
+    private $js_includes = <<<EOT
 	<link href="./flot/examples.css" rel="stylesheet" type="text/css">
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="./flot/excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="./flot/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="./flot/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="./flot/jquery.flot.time.js"></script>
 EOT;
+
+    /* Display functions */
+    
+    public function PresetsPicker ($json) {
+        $presets = json_decode($json);
+        $table = '<table id="presets-picker">'.PHP_EOL;
+        foreach($presets as $p) {
+            $table .= '<tr data-preset-id="'.$p->apply_preset_id.'"><td>'.$p->name.'</td><td>'.$p->first_date.'</td><td>'.$p->last_date.'</td><td>'.$p->rank.'</td></tr>'.PHP_EOL;
+        }
+        $table .='</table>'.PHP_EOL;
+        print $table;
+    }
+
+    public function EditPresetDetails ($details) {
+        return $details;
+    }
+
+    /* Graphing functions */
+
     public function BuildGraphJS($timeframes, $exceptions) {
         $js  = $this->js_includes . PHP_EOL;
         $vars = $this->DefineGraphVars($timeframes,$exceptions);
@@ -50,7 +66,6 @@ EOT;
         return $return;
 
     }
-
     
     private function jsTime($str) {
         return strtotime($str)*1000;
