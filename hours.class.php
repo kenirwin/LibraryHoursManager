@@ -1,6 +1,6 @@
 <?
 class Hours {
-    public $db;
+    private $db;
 
     public function __construct() {
         include_once ("config.php");
@@ -99,7 +99,7 @@ class Hours {
         $q = 'SELECT * FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
         $stmt = $this->db->prepare($q);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 } 
 ?>
