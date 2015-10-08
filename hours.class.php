@@ -12,6 +12,18 @@ class Hours {
             echo $ex->getMessage();
         }
     }
+    
+    private function ExecutePrepared($query,$values) {
+        try {
+            print ($query);
+            $stmt=$this->db->prepare($query);
+            $stmt->execute($values);
+        } catch (PDOException $ex) {
+            print $ex->getMessage;
+        }
+    }
+
+
 
     public function ListDailyHours ($format) {
         $start = date("Y-m-d");
@@ -97,8 +109,18 @@ class Hours {
         foreach ($onetime_fields as $f) {
             $values[$f] = $req->$f;
         }
-        //update timeframes(name,first_date,last_date) where apply_preset_id = $req->preset_id
-        //update presets.name = $req->name where $req->preset_id = presets_id
+        if (isset($req->preset_id)) {
+            $q1 = 'update timeframes SET name=?,first_date=?,last_date=? WHERE apply_preset_id = ?';
+            $v1 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
+            $this->ExecutePrepared($q1,$v1);
+            $q2 = 'update presets SET name=? WHERE id=?';
+            $v2 = array($req->name, $req->preset_id);
+            $this->ExecutePrepared($q2,$v2);
+        }
+        else { //if new preset
+
+        }
+
 
         foreach ($this->days as $day) {
             if (isset($req->settings_key->$day)) { 
