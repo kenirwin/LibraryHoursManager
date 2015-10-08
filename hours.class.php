@@ -87,7 +87,7 @@ class Hours {
 
     // Insert & Update functions
     
-    public function UpdatePreset($req,$query_type='update') {
+    public function UpdatePreset($req) {
         $req = json_decode($req);
         print_r($req);
         print '<hr>'.PHP_EOL;
@@ -101,6 +101,13 @@ class Hours {
         //update presets.name = $req->name where $req->preset_id = presets_id
 
         foreach ($this->days as $day) {
+            if (isset($req->settings_key->$day)) { 
+                $query_type = 'update';
+                $settings_key = $req->settings_key->$day;
+            }
+            else {
+                $query_type = 'insert';
+            }
             if ($req->closed->$day == "on") {
                 //$settings_values = array('','','N','Y');
                 list($req->opentime->$day, $req->closetime->$day,$latenight,$closed) = array('','','N','Y');                
@@ -115,15 +122,7 @@ class Hours {
                 $settings_values = array($req->opentime->$day, $req->closetime->$day, $latenight, $closed);
             }
             if ($query_type == 'update') {
-                $q= 'UPDATE `settings` SET opentime="'.$req->opentime->$day.'", closetime="'.$req->closetime->$day.'", latenight="'.$latenight.'", closed="'.$closed.'" WHERE day="'.$day.'" AND preset_id='.$req->preset_id;
-                print '<li>'.$q;
-                try {
-                    $stmt = $this->db->query($q);
-                    print "<li>AFFECTED: ".$stmt->rowCount();
-                } catch (PDOException $ex) {
-                    print '<li>'.$ex->getMessage();
-                }
-
+                $q= 'UPDATE `settings` SET opentime="'.$req->opentime->$day.'", closetime="'.$req->closetime->$day.'", latenight="'.$latenight.'", closed="'.$closed.'" WHERE settings_key='.$settings_key;
                 /*
                   I couldn't get this prepared-query statement section to work
                   -- kept getting a message that the number of tokens and 
@@ -149,8 +148,19 @@ class Hours {
                 }
                 */
             }
-
-
+            elseif ((isset($req->opentime->$day) & isset($req->closetime->$day)) || $closed == 'Y') {
+                    $q= 'INSERT INTO `settings`(day,preset_id,opentime,closetime,latenight,closed) VALUES ("'.$day.'","'.$req->preset_id.'","'.$req->opentime->$day.'", "'.$req->closetime->$day.'", "'.$latenight.'", "'.$closed.'")';
+            }
+            if (isset($q)) {
+                print '<li>'.$q;
+                try {
+                    $stmt = $this->db->query($q);
+                    print "<li>AFFECTED: ".$stmt->rowCount();
+                } catch (PDOException $ex) {
+                    print '<li>'.$ex->getMessage();
+                }
+            }
+            
         }
         // do daily updates
     }
