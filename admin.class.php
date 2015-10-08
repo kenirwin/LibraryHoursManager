@@ -78,13 +78,13 @@ EOT;
 
 
 
-                return '<td><input type="text" name="opentime['.$day_settings->day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day_settings->day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+                return '<td><input type="text" name="opentime['.$day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
             }
         }
         // if day settings not found
-        $closed = '<input type="checkbox" name="closed['.$day_settings->day.']"/>'.PHP_EOL;
-        $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
-        return '<td><input type="text" name="opentime['.$day_settings->day.']" value=""></td><td><input type="text" name="closetime['.$day_settings->day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+        $closed = '<input type="checkbox" name="closed['.$day.']"/>'.PHP_EOL;
+        $open_late = '<input type="checkbox" name="latenight['.$day.']"/>'.PHP_EOL;
+        return '<td><input type="text" name="opentime['.$day.']" value=""></td><td><input type="text" name="closetime['.$day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
     }
 
     /* Graphing functions */
