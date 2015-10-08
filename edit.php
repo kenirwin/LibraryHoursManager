@@ -20,7 +20,7 @@ $admin = new HoursAdmin();
 if (isset($_REQUEST['action'])) {
     switch ($_REQUEST['action']) {
     case ('submit_preset_values'):
-        print_r($_REQUEST);
+        $hours->UpdatePreset(json_encode($_REQUEST));        
         break;
     }
 }

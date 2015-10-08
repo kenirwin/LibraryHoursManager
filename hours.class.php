@@ -1,6 +1,7 @@
 <?
 class Hours {
     private $db;
+    private $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
 
     public function __construct() {
         include_once ("config.php");
@@ -82,6 +83,48 @@ class Hours {
             return $row['last_date'];
         }
     } 
+    
+
+    // Insert & Update functions
+    
+    public function UpdatePreset($req) {
+        $req = json_decode($req);
+        print_r($req);
+        print '<hr>'.PHP_EOL;
+        
+        $values = array(); //use for new or update? 
+        $onetime_fields = array('name','first_date','last_date');
+        $daily_values = array('opentime', 'closetime');
+        
+        foreach ($onetime_fields as $f) {
+            $values[$f] = $req->$f;
+        }
+        //update timeframes(name,first_date,last_date) where apply_preset_id = $req->preset_id
+        //update presets.name = $req->name where $req->preset_id = presets_id
+        
+
+
+        // KEN START HERE
+        foreach ($this->days as $day) {
+            if ($req->closed[$day] == "on") {
+                // set closed = Y
+                // other value = NULL
+            }
+            else { //else, if not closeed....
+                if ($req->latenight[$day] == "on") {
+                    //set latenight = Y
+                }
+                
+                foreach ($daily_values as $field) {
+                    //update settings
+                }
+            }
+        }
+        
+        // do daily updates
+    }
+
+
     
     // JSON functions
     
