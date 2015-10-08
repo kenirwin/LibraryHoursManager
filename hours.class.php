@@ -102,7 +102,8 @@ class Hours {
 
         foreach ($this->days as $day) {
             if ($req->closed->$day == "on") {
-                $settings_values = array('','','','Y');
+                //$settings_values = array('','','N','Y');
+                list($req->opentime->$day, $req->closetime->$day,$latenight,$closed) = array('','','N','Y');                
             }
             else { //else, if not closeed....
                 $settings_values = array();
@@ -111,19 +112,42 @@ class Hours {
                     $latenight = 'Y';
                 }
                 else { $latenight = 'N'; }
-                $values = array($req->opentime->$day, $req->closetime->$day, $latenight, $closed);
+                $settings_values = array($req->opentime->$day, $req->closetime->$day, $latenight, $closed);
             }
             if ($query_type == 'update') {
-                $bindings = array();
+                $q= 'UPDATE `settings` SET opentime="'.$req->opentime->$day.'", closetime="'.$req->closetime->$day.'", latenight="'.$latenight.'", closed="'.$closed.'" WHERE day="'.$day.'" AND preset_id='.$req->preset_id;
+                print '<li>'.$q;
+                try {
+                    $stmt = $this->db->query($q);
+                    print "<li>AFFECTED: ".$stmt->rowCount();
+                } catch (PDOException $ex) {
+                    print '<li>'.$ex->getMessage();
+                }
+
+                /*
+                  I couldn't get this prepared-query statement section to work
+                  -- kept getting a message that the number of tokens and 
+                  values didn't match
+                
+
+                $tokens = array();
                 foreach ($settings_fields as $k=>$v) {
-                    array_push($bindings, $v.'=?');
+                    array_push($tokens, $v.'=?');
                 }
                 array_push($settings_values, $day, $req->preset_id);
-                $q='UPDATE `settings` SET '.join(',',$bindings). ' WHERE `day`=? AND `preset_id`=?';
+                $q='UPDATE `settings` SET '.join(',',$tokens). ' WHERE `day`=? AND `preset_id`=?';
                 print "<li>$q: ";
+
                 print_r($settings_values);
-                $stmt = $this->db->prepare($q);
-                //$stmt->execute(array($values));
+                print "SV: ".sizeof($settings_values)."<BR>";
+                try {
+                    $stmt = $this->db->prepare($q);
+                    $stmt->execute(array($settings_values));
+                }
+                catch (PDOException $ex) {
+                    print $ex->getMessage();
+                }
+                */
             }
 
 
