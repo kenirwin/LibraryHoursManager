@@ -87,40 +87,47 @@ class Hours {
 
     // Insert & Update functions
     
-    public function UpdatePreset($req) {
+    public function UpdatePreset($req,$query_type='update') {
         $req = json_decode($req);
         print_r($req);
         print '<hr>'.PHP_EOL;
-        
-        $values = array(); //use for new or update? 
+        $settings_fields = array('opentime','closetime','latenight','closed');
         $onetime_fields = array('name','first_date','last_date');
-        $daily_values = array('opentime', 'closetime');
         
         foreach ($onetime_fields as $f) {
             $values[$f] = $req->$f;
         }
         //update timeframes(name,first_date,last_date) where apply_preset_id = $req->preset_id
         //update presets.name = $req->name where $req->preset_id = presets_id
-        
 
-
-        // KEN START HERE
         foreach ($this->days as $day) {
-            if ($req->closed[$day] == "on") {
-                // set closed = Y
-                // other value = NULL
+            if ($req->closed->$day == "on") {
+                $settings_values = array('','','','Y');
             }
             else { //else, if not closeed....
-                if ($req->latenight[$day] == "on") {
-                    //set latenight = Y
+                $settings_values = array();
+                $closed = 'N';
+                if ($req->latenight->$day == "on") {
+                    $latenight = 'Y';
                 }
-                
-                foreach ($daily_values as $field) {
-                    //update settings
-                }
+                else { $latenight = 'N'; }
+                $values = array($req->opentime->$day, $req->closetime->$day, $latenight, $closed);
             }
+            if ($query_type == 'update') {
+                $bindings = array();
+                foreach ($settings_fields as $k=>$v) {
+                    array_push($bindings, $v.'=?');
+                }
+                array_push($settings_values, $day, $req->preset_id);
+                $q='UPDATE `settings` SET '.join(',',$bindings). ' WHERE `day`=? AND `preset_id`=?';
+                print "<li>$q: ";
+                print_r($settings_values);
+                $stmt = $this->db->prepare($q);
+                //$stmt->execute(array($values));
+            }
+
+
         }
-        
         // do daily updates
     }
 
