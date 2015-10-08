@@ -76,9 +76,9 @@ EOT;
                     $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
                 }
 
+                $hidden_settings_key = '<input type="hidden" name="settings_key['.$day.']" value="'.$day_settings->settings_key.'" />';
 
-
-                return '<td><input type="text" name="opentime['.$day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+                return '<td>'.$hidden_settings_key.'<input type="text" name="opentime['.$day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
             }
         }
         // if day settings not found
