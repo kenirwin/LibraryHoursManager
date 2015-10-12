@@ -12,7 +12,8 @@ EOT;
     
     public function PresetsPicker ($json) {
         $presets = json_decode($json);
-        $table = '<table id="presets-picker">'.PHP_EOL;
+        $table  = '<div id="new-preset-button" class="button">New Preset</div>'.PHP_EOL;
+        $table .= '<table id="presets-picker">'.PHP_EOL;
         foreach($presets as $p) {
             $table .= '<tr data-preset-id="'.$p->apply_preset_id.'"><td>'.$p->name.'</td><td>'.$p->first_date.'</td><td>'.$p->last_date.'</td><td>'.$p->rank.'</td></tr>'.PHP_EOL;
         }
@@ -29,7 +30,12 @@ EOT;
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         $table .= $this->FormDays($details);
-        $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
+        if (isset($details[0]->preset_id)) {
+            $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
+        }
+        else { 
+            $table .= '<input type="hidden" name="action" value="submit_new_preset">'.PHP_EOL;
+        }
         $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
         return $table;

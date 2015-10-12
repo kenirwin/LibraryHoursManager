@@ -8,6 +8,19 @@
                        $('#preset-details').html(result);
                    }});
                });
+
+
+               $('#new-preset-button').click(function() {
+
+                   $.ajax({url: 'ajax-admin.php?action=new-preset', success: function(result) {
+                       $('#preset-details').html(result);
+                   }});
+
+
+               });
+
+
+
            });
 </script>
 <?
@@ -22,6 +35,9 @@ if (isset($_REQUEST['action'])) {
     case ('submit_preset_values'):
         $hours->UpdatePreset(json_encode($_REQUEST));        
         break;
+    case ('submit_new_preset'):
+        $hours->UpdatePreset(json_encode($_REQUEST));
+        break;
     }
 }
 else { 
@@ -32,4 +48,11 @@ else {
 }
 ?>
 <div id="preset-details"></div>
+
+<? 
+    if (sizeof($_REQUEST) > 0) {
+        print '<hr>'.PHP_EOL;
+        print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
+    }
+?>
 

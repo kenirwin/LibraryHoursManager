@@ -109,7 +109,7 @@ class Hours {
         foreach ($onetime_fields as $f) {
             $values[$f] = $req->$f;
         }
-        if (isset($req->preset_id)) {
+        if (isset($req->preset_id) && ($req->preset_id != '')) {
             $q1 = 'update timeframes SET name=?,first_date=?,last_date=? WHERE apply_preset_id = ?';
             $v1 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
             $this->ExecutePrepared($q1,$v1);
@@ -118,7 +118,20 @@ class Hours {
             $this->ExecutePrepared($q2,$v2);
         }
         else { //if new preset
+            $q1 = 'insert into presets (name,rank) VALUES (?,?)';
+            $v1 = array ($req->name,2);
+            print "going for it!";
+            print "<li>$q1</li>";
+            print_r ($v1);
+            $this->ExecutePrepared($q1,$v1);
+            $new_id = $this->db->lastInsertId();
+            print $new_id;
+            $q2 = 'INSERT INTO timeframes (`name`,`first_date`,`last_date`,`apply_preset_id`) VALUES (?,?,?,?)';
+            $v2 = array($req->name,$req->first_date,$req->last_date,$new_id);
+            print "<li>$q2</li>";
+            print_r ($v2);
 
+            $this->ExecutePrepared($q2,$v2);
         }
 
 

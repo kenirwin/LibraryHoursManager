@@ -8,6 +8,10 @@ if (isset($_REQUEST['action'])) {
     case 'show-preset':
         $details = $hours->GetPresetDetails($_REQUEST['id']);
         print ($admin->EditPresetDetails($details));
+        break;
+    case 'new-preset':
+        print ($admin->EditPresetDetails());
+        break;
     }
 }
 ?>
