@@ -1,15 +1,25 @@
+<html>
+<head>
 <meta name=viewport content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
+          function BindPresetFields() {
+              $(function() {
+                  $('input[name="first_date"]').datepicker();
+                  $('input[name="last_date"]').datepicker();
+              });
+          }
+
            $(function() {
                $('#presets-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
                    $(this).addClass('highlight');
                    $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).attr('data-preset-id'), success: function(result) {
                        $('#preset-details').html(result);
+                       BindPresetFields();
                    }});
                });
 
@@ -17,6 +27,7 @@
                    
                    $.ajax({url: 'ajax-admin.php?action=new-preset', success: function(result) {
                        $('#preset-details').html(result);
+                       BindPresetFields();
                    }});
 
 
@@ -31,9 +42,10 @@
                    }
                });
 
-
            });
 </script>
+</head>
+<body id="edit">
 <?
 include ("hours.class.php");
 include ("admin.class.php");
@@ -64,7 +76,7 @@ else {
 ?>
 <div id="preset-details"></div>
 <? print $graphJS; ?>
-<h2 style="text-align:center">Date Settings by Rank</h2>
+<h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
 <div class="demo-container">
 	<div id="placeholder" class="demo-placeholder"></div>
 </div>
@@ -76,4 +88,4 @@ else {
         print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
     }
 ?>
-
+</body>

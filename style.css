@@ -1,4 +1,9 @@
 /* edit.php */
+body#edit { 
+    margin: 1em;
+}
+
+
 .button {
     border: 1px solid lightblue;
     border-radius: .25em;
