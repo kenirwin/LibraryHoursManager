@@ -1,3 +1,22 @@
+/* edit.php */
+.button {
+    border: 1px solid lightblue;
+    border-radius: .25em;
+    display: inline;
+    padding: .25em;
+}
+.button:hover {
+    background-color: lightblue;
+    border-color: blue;
+}
+#new-preset-button {
+
+}
+#presets-picker {
+    margin: .5em 0 1em 0;
+}
+
+/* calendar.php */ 
 #hours { 
   width: 100%; 
   border-collapse: collapse;
