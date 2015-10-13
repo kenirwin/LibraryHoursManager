@@ -15,6 +15,9 @@
 #presets-picker {
     margin: .5em 0 1em 0;
 }
+.highlight {
+    background-color: yellow;
+}
 
 /* calendar.php */ 
 #hours { 

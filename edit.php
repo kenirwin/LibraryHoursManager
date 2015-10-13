@@ -5,6 +5,8 @@
 <script type="text/javascript">
            $(function() {
                $('#presets-picker tr').click(function() {
+                   $(this).parent().children().removeClass('highlight');
+                   $(this).addClass('highlight');
                    $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).attr('data-preset-id'), success: function(result) {
                        $('#preset-details').html(result);
                    }});
@@ -12,7 +14,7 @@
 
 
                $('#new-preset-button').click(function() {
-
+                   
                    $.ajax({url: 'ajax-admin.php?action=new-preset', success: function(result) {
                        $('#preset-details').html(result);
                    }});
