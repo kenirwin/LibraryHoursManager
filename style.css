@@ -12,6 +12,17 @@
 #new-preset-button {
 
 }
+a.delete-button {
+    border-color: red;
+    padding: .1em;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+a.delete-button:hover {
+    background-color: red;
+    color: white;
+}
 #presets-picker {
     margin: .5em 0 1em 0;
 }

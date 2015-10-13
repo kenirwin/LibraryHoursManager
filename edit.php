@@ -13,7 +13,6 @@
                    }});
                });
 
-
                $('#new-preset-button').click(function() {
                    
                    $.ajax({url: 'ajax-admin.php?action=new-preset', success: function(result) {
@@ -22,7 +21,15 @@
 
 
                });
-
+               
+               $('.delete-button').click(function(event) {
+                   var setting_name = $(this).parent().parent().children(':first-child').text();
+                   var r = confirm('Really delete this preset ('+setting_name+') and all its settings?');
+                   if (r == false) {
+                       event.preventDefault();
+                       event.stopPropagation();
+                   }
+               });
 
 
            });
@@ -41,6 +48,9 @@ if (isset($_REQUEST['action'])) {
         break;
     case ('submit_new_preset'):
         $hours->UpdatePreset(json_encode($_REQUEST));
+        break;
+    case ('delete_preset'):
+        $hours->DeletePreset($_REQUEST['preset_id']);
         break;
     }
 }

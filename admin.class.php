@@ -16,7 +16,7 @@ EOT;
         $table .= '<div id="new-preset-button" class="button">New Preset</div>'.PHP_EOL;
         $table .= '<table id="presets-picker-table">'.PHP_EOL;
         foreach($presets as $p) {
-            $table .= '<tr data-preset-id="'.$p->apply_preset_id.'"><td>'.$p->name.'</td><td>'.$p->first_date.'</td><td>'.$p->last_date.'</td><td>'.$p->rank.'</td></tr>'.PHP_EOL;
+            $table .= '<tr data-preset-id="'.$p->apply_preset_id.'"><td>'.$p->name.'</td><td>'.$p->first_date.'</td><td>'.$p->last_date.'</td><td>'.$p->rank.'</td><td><a href="edit.php?action=delete_preset&preset_id='.$p->apply_preset_id.'" class="button delete-button">x</a></td></tr>'.PHP_EOL;
         }
         $table .='</table>'.PHP_EOL;
         $table .='</div>'.PHP_EOL;

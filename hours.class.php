@@ -194,7 +194,16 @@ class Hours {
         // do daily updates
     }
 
-
+    public function DeletePreset($id) {
+        //        presets.id; settings.preset_id; timeframes.apply_preset_id;
+        $q1 = 'DELETE FROM presets WHERE id = ?';
+        $q2 = 'DELETE FROM settings WHERE preset_id = ?';
+        $q3 = 'DELETE FROM timeframes WHERE apply_preset_id = ?';
+        $v = array($id);
+        $this->ExecutePrepared($q1,$v);
+        $this->ExecutePrepared($q2,$v);
+        $this->ExecutePrepared($q3,$v);
+    }
     
     // JSON functions
     
