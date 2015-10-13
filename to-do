@@ -2,3 +2,4 @@
 * input/edit mechanism for exceptions
 * error checking / prevention
 * what happens after a submission on edit.php? show presets picker, etc?
+* update preset and settings separately / allow cloning or referring by old id
