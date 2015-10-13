@@ -23,8 +23,6 @@ class Hours {
         }
     }
 
-
-
     public function ListDailyHours ($format) {
         $start = date("Y-m-d");
         $end = $this->GetLastDate();
@@ -118,22 +116,18 @@ class Hours {
             $this->ExecutePrepared($q2,$v2);
         }
         else { //if new preset
-            $q1 = 'insert into presets (name,rank) VALUES (?,?)';
+            $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';
             $v1 = array ($req->name,2);
-            print "going for it!";
             print "<li>$q1</li>";
             print_r ($v1);
             $this->ExecutePrepared($q1,$v1);
-            $new_id = $this->db->lastInsertId();
-            print $new_id;
+            $req->preset_id = $this->db->lastInsertId();
             $q2 = 'INSERT INTO timeframes (`name`,`first_date`,`last_date`,`apply_preset_id`) VALUES (?,?,?,?)';
-            $v2 = array($req->name,$req->first_date,$req->last_date,$new_id);
+            $v2 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
             print "<li>$q2</li>";
             print_r ($v2);
-
             $this->ExecutePrepared($q2,$v2);
         }
-
 
         foreach ($this->days as $day) {
             if (isset($req->settings_key->$day)) { 
@@ -147,7 +141,7 @@ class Hours {
                 //$settings_values = array('','','N','Y');
                 list($req->opentime->$day, $req->closetime->$day,$latenight,$closed) = array('','','N','Y');                
             }
-            else { //else, if not closeed....
+            else { //else, if not closed....
                 $settings_values = array();
                 $closed = 'N';
                 if ($req->latenight->$day == "on") {
