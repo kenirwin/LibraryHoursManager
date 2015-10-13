@@ -31,6 +31,7 @@ EOT;
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
+        $table .= $this->RankPulldown($details[0]->rank);
         $table .= $this->FormDays($details);
         if (isset($details[0]->preset_id)) {
             $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
@@ -41,6 +42,17 @@ EOT;
         $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
         return $table;
+    }
+
+    private function RankPulldown($rank='') {
+        $rankselect = array();
+        $rankselect[$rank] = ' selected';
+        $pulldown  = 'rank: <select name="rank">'.PHP_EOL;
+        $pulldown .= ' <option>Select one</option>'.PHP_EOL;
+        $pulldown .= ' <option value="1"'.$rankselect[1].'>1 - General Time Period</option>'.PHP_EOL;
+        $pulldown .= ' <option value="2"'.$rankselect[2].'>2 - Special Time Period</option>'.PHP_EOL;
+        $pulldown .= '</select>'.PHP_EOL;
+        return $pulldown;
     }
 
     private function FormRow($key, $value, $type) {

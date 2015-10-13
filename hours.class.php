@@ -111,13 +111,13 @@ class Hours {
             $q1 = 'update timeframes SET name=?,first_date=?,last_date=? WHERE apply_preset_id = ?';
             $v1 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
             $this->ExecutePrepared($q1,$v1);
-            $q2 = 'update presets SET name=? WHERE id=?';
-            $v2 = array($req->name, $req->preset_id);
+            $q2 = 'update presets SET name=?, rank=? WHERE id=?';
+            $v2 = array($req->name, $req->rank, $req->preset_id);
             $this->ExecutePrepared($q2,$v2);
         }
         else { //if new preset
             $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';
-            $v1 = array ($req->name,2);
+            $v1 = array ($req->name,$req->rank);
             print "<li>$q1</li>";
             print_r ($v1);
             $this->ExecutePrepared($q1,$v1);
