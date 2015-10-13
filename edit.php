@@ -59,9 +59,16 @@ else {
     //$presets = $hours->getJSON('presets');
     $exceptions = $hours->getJSON('exceptions');
     $admin->PresetsPicker($times);
+    $graphJS = $admin->BuildGraphJS($times,$exceptions);
 }
 ?>
 <div id="preset-details"></div>
+<? print $graphJS; ?>
+<h2 style="text-align:center">Date Settings by Rank</h2>
+<div class="demo-container">
+	<div id="placeholder" class="demo-placeholder"></div>
+</div>
+
 
 <? 
     if (sizeof($_REQUEST) > 0) {
