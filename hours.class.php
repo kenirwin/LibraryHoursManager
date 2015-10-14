@@ -218,7 +218,7 @@ class Hours {
     }
 
     public function GetTimeframesAndRanks () {
-        $q = 'SELECT * FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
+        $q = 'SELECT timeframes.name as name, first_date,last_date,apply_preset_id,rank FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
         $stmt = $this->db->prepare($q);
         $stmt->execute();
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
