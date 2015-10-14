@@ -22,15 +22,26 @@ EOT;
         print $table;
     }
 
-    public function EditTimeframeDetails ($json) {
+    public function EditTimeframeDetails ($json,$hours) {
         $details = json_decode($json);
         //        print_r($details); print '<hr>'.PHP_EOL;
+        $table  = '<div id="edit-timeframe">'.PHP_EOL;
+        $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;
         $table .= $this->FormRow('preset_id', $details[0]->preset_id, 'hidden');
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
-        $table .= $this->RankPulldown($details[0]->rank);
+        //        $table .= $this->RankPulldown($details[0]->rank);
+                $table .= $this->SettingsPulldown($hours);
+        $table .= '<div id="settings-placeholder"></div>'.PHP_EOL;
+        $table .= '<input type="submit">'.PHP_EOL;
+        $table .= '</form>'.PHP_EOL;
+        return $table;
+    }
+
+    private function SettingsEditor($details) {
+        $table .= '<h2>Settings'.PHP_EOL;
         $table .= $this->FormDays($details);
         if (isset($details[0]->preset_id)) {
             $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
@@ -38,9 +49,22 @@ EOT;
         else { 
             $table .= '<input type="hidden" name="action" value="submit_new_preset">'.PHP_EOL;
         }
-        $table .= '<input type="submit">'.PHP_EOL;
-        $table .= '</form>'.PHP_EOL;
-        return $table;
+
+    }
+
+    private function SettingsPulldown($hours) {
+        $presets = json_decode($hours->GetJSON('presets'));
+        $pulldown  = 'use preset settings: <select name="use_preset">'.PHP_EOL;
+        $pulldown .= ' <option>Select one</option>'.PHP_EOL;
+        $pulldown .= ' <option value="new">Create New Preset</option>'.PHP_EOL;
+        foreach ($presets as $p) {
+            if ($p->rank == 1) { $rank_desc = "General Time Period"; }
+            elseif($p->rank==2) { $rank_desc = "Special Time Period"; }
+            
+            $pulldown .= ' <option value="'.$p->id.'">'.$p->name.' (Rank: '.$p->rank.' - '.$rank_desc.')</option>'.PHP_EOL;
+        }
+        $pulldown .= '</select><br />'.PHP_EOL;
+        return $pulldown;
     }
 
     private function RankPulldown($rank='') {
