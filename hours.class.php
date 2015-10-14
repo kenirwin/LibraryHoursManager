@@ -54,7 +54,7 @@ class Hours {
             }
         }
         else {
-            $hours = $this->GetHoursFromPreset($date);
+            $hours = $this->GetHoursFromTimeframe($date);
         }
         if ($format == "text") { 
             return $hours;
@@ -64,7 +64,7 @@ class Hours {
         }
     }
     
-    public function GetHoursFromPreset($date) {
+    public function GetHoursFromTimeframe($date) {
         $day_of_week = date("l", strtotime($date));
         $q = "SELECT settings.* FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
         
@@ -97,7 +97,7 @@ class Hours {
 
     // Insert & Update functions
     
-    public function UpdatePreset($req) {
+    public function UpdateTimeframe($req) {
         $req = json_decode($req);
         print_r($req);
         print '<hr>'.PHP_EOL;
@@ -194,7 +194,7 @@ class Hours {
         // do daily updates
     }
 
-    public function DeletePreset($id) {
+    public function DeleteTimeframe($id) {
         //        presets.id; settings.preset_id; timeframes.apply_preset_id;
         $q1 = 'DELETE FROM presets WHERE id = ?';
         $q2 = 'DELETE FROM settings WHERE preset_id = ?';
@@ -224,7 +224,7 @@ class Hours {
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function GetPresetDetails ($id) {
+    public function GetTimeframeDetails ($id) {
         $q = 'SELECT * FROM settings,timeframes,presets where presets.id = settings.preset_id and apply_preset_id = presets.id and settings.preset_id = ?';
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($id));

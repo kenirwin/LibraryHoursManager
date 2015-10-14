@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
-          function BindPresetFields() {
+          function BindTimeframeFields() {
               $(function() {
                   $('input[name="first_date"]').datepicker();
                   $('input[name="last_date"]').datepicker();
@@ -14,20 +14,19 @@
           }
 
            $(function() {
-               $('#presets-picker tr').click(function() {
+               $('#timeframe-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
                    $(this).addClass('highlight');
-                   $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).attr('data-preset-id'), success: function(result) {
+                   $.ajax({url: 'ajax-admin.php?action=show-timeframe&id='+$(this).attr('data-preset-id'), success: function(result) {
                        $('#preset-details').html(result);
-                       BindPresetFields();
+                       BindTimeframeFields();
                    }});
                });
 
-               $('#new-preset-button').click(function() {
-                   
-                   $.ajax({url: 'ajax-admin.php?action=new-preset', success: function(result) {
+               $('#new-timeframe-button').click(function() {
+                   $.ajax({url: 'ajax-admin.php?action=new-timeframe', success: function(result) {
                        $('#preset-details').html(result);
-                       BindPresetFields();
+                       BindTimeframeFields();
                    }});
 
 
@@ -56,13 +55,13 @@ $admin = new HoursAdmin();
 if (isset($_REQUEST['action'])) {
     switch ($_REQUEST['action']) {
     case ('submit_preset_values'):
-        $hours->UpdatePreset(json_encode($_REQUEST));        
+        $hours->UpdateTimeframe(json_encode($_REQUEST));        
         break;
     case ('submit_new_preset'):
-        $hours->UpdatePreset(json_encode($_REQUEST));
+        $hours->UpdateTimeframe(json_encode($_REQUEST));
         break;
     case ('delete_preset'):
-        $hours->DeletePreset($_REQUEST['preset_id']);
+        $hours->DeleteTimeframe($_REQUEST['preset_id']);
         break;
     }
 }
@@ -70,7 +69,7 @@ else {
     $times = $hours->GetTimeframesAndRanks();
     //$presets = $hours->getJSON('presets');
     $exceptions = $hours->getJSON('exceptions');
-    $admin->PresetsPicker($times);
+    $admin->TimeframePicker($times);
     $graphJS = $admin->BuildGraphJS($times,$exceptions);
 }
 ?>

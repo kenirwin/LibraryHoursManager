@@ -9,20 +9,20 @@ EOT;
 
     /* Display functions */
     
-    public function PresetsPicker ($json) {
-        $presets = json_decode($json);
-        $table  = '<div id="presets-picker">'.PHP_EOL;
-        $table .= '<div id="new-preset-button" class="button">New Preset</div>'.PHP_EOL;
-        $table .= '<table id="presets-picker-table">'.PHP_EOL;
-        foreach($presets as $p) {
-            $table .= '<tr data-preset-id="'.$p->apply_preset_id.'"><td>'.$p->name.'</td><td>'.$p->first_date.'</td><td>'.$p->last_date.'</td><td>'.$p->rank.'</td><td><a href="edit.php?action=delete_preset&preset_id='.$p->apply_preset_id.'" class="button delete-button">x</a></td></tr>'.PHP_EOL;
+    public function TimeframePicker ($json) {
+        $timeframes = json_decode($json);
+        $table  = '<div id="timeframe-picker">'.PHP_EOL;
+        $table .= '<div id="new-timeframe-button" class="button">New Timeframe</div>'.PHP_EOL;
+        $table .= '<table id="timeframe-picker-table">'.PHP_EOL;
+        foreach($timeframes as $t) {
+            $table .= '<tr data-preset-id="'.$t->apply_preset_id.'"><td>'.$t->name.'</td><td>'.$t->first_date.'</td><td>'.$t->last_date.'</td><td>'.$t->rank.'</td><td><a href="edit.php?action=delete_preset&preset_id='.$t->apply_preset_id.'" class="button delete-button">x</a></td></tr>'.PHP_EOL;
         }
         $table .='</table>'.PHP_EOL;
         $table .='</div>'.PHP_EOL;
         print $table;
     }
 
-    public function EditPresetDetails ($json) {
+    public function EditTimeframeDetails ($json) {
         $details = json_decode($json);
         //        print_r($details); print '<hr>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;

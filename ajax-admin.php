@@ -5,12 +5,12 @@ $hours = new Hours;
 $admin = new HoursAdmin;
 if (isset($_REQUEST['action'])) {
     switch ($_REQUEST['action']) {
-    case 'show-preset':
-        $details = $hours->GetPresetDetails($_REQUEST['id']);
-        print ($admin->EditPresetDetails($details));
+    case 'show-timeframe':
+        $details = $hours->GetTimeframeDetails($_REQUEST['id']);
+        print ($admin->EditTimeframeDetails($details));
         break;
-    case 'new-preset':
-        print ($admin->EditPresetDetails());
+    case 'new-timeframe':
+        print ($admin->EditTimeframeDetails());
         break;
     }
 }
