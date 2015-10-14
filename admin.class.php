@@ -33,15 +33,16 @@ EOT;
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         //        $table .= $this->RankPulldown($details[0]->rank);
-                $table .= $this->SettingsPulldown($hours);
+        $table .= $this->SettingsPulldown($hours);
         $table .= '<div id="settings-placeholder"></div>'.PHP_EOL;
         $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
         return $table;
     }
 
-    private function SettingsEditor($details) {
-        $table .= '<h2>Settings'.PHP_EOL;
+    public function EditPresetDetail($details) {
+        $details = json_decode($details);
+        $table .= '<h2>Settings</h2>'.PHP_EOL;
         $table .= $this->FormDays($details);
         if (isset($details[0]->preset_id)) {
             $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
@@ -50,6 +51,7 @@ EOT;
             $table .= '<input type="hidden" name="action" value="submit_new_preset">'.PHP_EOL;
         }
 
+        return $table;
     }
 
     private function SettingsPulldown($hours) {

@@ -12,6 +12,11 @@ if (isset($_REQUEST['action'])) {
     case 'new-timeframe':
         print ($admin->EditTimeframeDetails());
         break;
+    case 'show-preset':
+        $details = $hours->GetTimeframeDetails($_REQUEST['id']);
+        print ($admin->EditPresetDetail($details));
+        print $details;
+        break;
     }
 }
 ?>

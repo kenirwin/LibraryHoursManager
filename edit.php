@@ -6,13 +6,20 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
-          function BindTimeframeFields() {
-              $(function() {
-                  $('input[name="first_date"]').datepicker();
-                  $('input[name="last_date"]').datepicker();
-              });
-          }
+     function BindTimeframeFields() {
+         $(function() {
+             $('select[name="use_preset"]').change(function() {
+                 $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).val(), success: function(result) {
+                       $('#settings-placeholder').html(result);
+                   }});
+             });
 
+
+             $('input[name="first_date"]').datepicker();
+             $('input[name="last_date"]').datepicker();
+         });
+     }
+     
            $(function() {
                $('#timeframe-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
