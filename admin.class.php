@@ -40,7 +40,7 @@ EOT;
         return $table;
     }
 
-    public function EditPresetDetail($details) {
+    public function EditPresetDetails($details) {
         $details = json_decode($details);
         $table .= '<h2>Settings</h2>'.PHP_EOL;
         $table .= $this->FormDays($details);

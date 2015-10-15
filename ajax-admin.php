@@ -13,8 +13,9 @@ if (isset($_REQUEST['action'])) {
         print ($admin->EditTimeframeDetails());
         break;
     case 'show-preset':
-        $details = $hours->GetTimeframeDetails($_REQUEST['id']);
-        print ($admin->EditPresetDetail($details));
+        //      $details = $hours->GetTimeframeDetails($_REQUEST['id']);
+        $details = $hours->GetSettingsDetails($_REQUEST['id']);
+        print ($admin->EditPresetDetails($details));
         print $details;
         break;
     }

@@ -230,7 +230,15 @@ class Hours {
         $stmt->execute(array($id));
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
+
+    public function GetSettingsDetails ($id) {
+        $q = 'SELECT settings.*, presets.name, presets.id FROM settings,presets WHERE settings.preset_id = presets.id and settings.preset_id = ?';
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($id));
+        return json_encode($stmt->fetchall(PDO::FETCH_ASSOC));
+    }
 } 
+
 
 
 ?>
