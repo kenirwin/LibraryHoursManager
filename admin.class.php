@@ -22,8 +22,8 @@ EOT;
         print $table;
     }
 
-    public function EditTimeframeDetails ($json,$hours,$id) {
-        $details = json_decode($json);
+    public function EditTimeframeDetails ($json='',$hours='',$id='') {
+        if (isset($json)) { $details = json_decode($json); }
         //        print_r($details); print '<hr>'.PHP_EOL;
         $table  = '<div id="edit-timeframe">'.PHP_EOL;
         $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
@@ -163,9 +163,9 @@ EOT;
             }
         }
         // if day settings not found
-        $closed = '<input type="checkbox" name="closed['.$day.']"/>'.PHP_EOL;
-        $open_late = '<input type="checkbox" name="latenight['.$day.']"/>'.PHP_EOL;
         if ($display_action == "edit") {
+            $closed = '<input type="checkbox" name="closed['.$day.']"/>'.PHP_EOL;
+            $open_late = '<input type="checkbox" name="latenight['.$day.']"/>'.PHP_EOL;
             return '<td><input type="text" name="opentime['.$day.']" value=""></td><td><input type="text" name="closetime['.$day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
         }
         else { 
