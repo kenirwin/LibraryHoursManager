@@ -1,5 +1,7 @@
+* need to be able to edit & delete settings & presets
+
 * develop testing scenarios
 * input/edit mechanism for exceptions
 * error checking / prevention
 * what happens after a submission on edit.php? show presets picker, etc?
-* update preset and settings separately / allow cloning or referring by old id
+* add index.php: generate.php, edit.php, others?
