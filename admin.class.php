@@ -22,7 +22,7 @@ EOT;
         print $table;
     }
 
-    public function EditTimeframeDetails ($json='',$hours='',$id='') {
+    public function EditTimeframeDetails ($json,$hours,$id) {
         if (isset($json)) { $details = json_decode($json); }
         //        print_r($details); print '<hr>'.PHP_EOL;
         $table  = '<div id="edit-timeframe">'.PHP_EOL;
@@ -33,7 +33,7 @@ EOT;
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         //        $table .= $this->RankPulldown($details[0]->rank);
-        $table .= $this->SettingsPulldown($hours, $id);
+        $table .= $this->SettingsSelectorPulldown($hours, $id);
         $table .= '<div id="settings-placeholder"></div>'.PHP_EOL;
         $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
@@ -43,6 +43,12 @@ EOT;
     public function ShowPresetDetails($details,$id,$display_action="show") {
         $details = json_decode($details);
         $table .= '<h2>Settings</h2>'.PHP_EOL;
+        $table .= $this->FormRow('preset_name',$details->name, 'text');
+        $table .= 'rank: <select name="rank">'.PHP_EOL;
+        $table .= ' <option>Select Rank</option>'.PHP_EOL;
+        $table .= ' <option value="1">1 - General Time Period</option>'.PHP_EOL;
+        $table .= ' <option value="1">2 - Special Time Period</option>'.PHP_EOL;
+        $table .= '</select><br />'.PHP_EOL;
         $table .= $this->ShowDays($details, $display_action);
         if (isset($details[0]->preset_id)) {
             $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
@@ -54,7 +60,7 @@ EOT;
         return $table;
     }
 
-    private function SettingsPulldown($hours,$id) {
+    private function SettingsSelectorPulldown($hours,$id='') {
         $presets = json_decode($hours->GetJSON('presets'));
         $pulldown  = 'use preset settings: <select name="use_preset">'.PHP_EOL;
         $pulldown .= ' <option>Select one</option>'.PHP_EOL;

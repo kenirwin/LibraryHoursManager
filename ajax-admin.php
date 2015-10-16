@@ -10,7 +10,7 @@ if (isset($_REQUEST['action'])) {
         print ($admin->EditTimeframeDetails($details,$hours,$_REQUEST['id']));
         break;
     case 'new-timeframe':
-        print ($admin->EditTimeframeDetails());
+        print ($admin->EditTimeframeDetails($details,$hours,$_REQUEST['id']));
         break;
     case 'show-preset':
         if ($_REQUEST['id'] == 'new') {
