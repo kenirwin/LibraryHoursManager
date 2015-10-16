@@ -23,6 +23,10 @@ if (isset($_REQUEST['action'])) {
             print ($admin->ShowPresetDetails($details, $_REQUEST['id'],"show"));
         }
         break;
+
+    case 'edit-preset':
+        $details = $hours->GetSettingsDetails($_REQUEST['id']);
+        print ($admin->ShowPresetDetails($details, $_REQUEST['id'],"edit"));
     }
 }
 ?>
