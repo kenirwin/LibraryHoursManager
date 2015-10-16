@@ -11,7 +11,10 @@
              $('select[name="use_preset"]').change(function() {
                  $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).val(), success: function(result) {
                      $('#settings-placeholder').html(result);
-                 }
+                 },
+                  complete: function () {
+                               BindSettingsFields();
+                  }
                   });
              });
              
@@ -21,23 +24,20 @@
      }
      
      function BindSettingsFields() {
-         alert ('biteme');
          $(function() {
              $('#edit-settings-button').click(function() {
-                 alert ('trying');
-                 /*
                  var preset_id = $(this).attr('data-preset-id');
                  alert (preset_id);
 
                  $.ajax({url: 'ajax-admin.php?action=edit-preset&id='+preset_id, success: function (result) {
-                     alert ('got something');
-                     //                     $('#settings-placeholder').html(result);
+                     alert (result);
+                     $('#show-or-edit-settings').html(result);
                  }
                   });
 
-*/                 
              });
          });
+
      }
 
      

@@ -52,6 +52,7 @@ EOT;
         }
         $table .= '<h2>Settings</h2>'.PHP_EOL;
         $table .= $edit_button.'<br/>'.PHP_EOL;
+        $table .= '<div id="show-or-edit-settings">'.PHP_EOL;
         if ($display_action == "edit") {
             $table .= $this->FormRow('action[]','submit_settings_details','hidden');
             $table .= $this->FormRow('preset_name',$details[0]->name, 'text');
@@ -71,7 +72,7 @@ EOT;
         else { 
             $table .= '<input type="hidden" name="action[]" value="submit_new_preset">'.PHP_EOL;
         }
-
+        $table .= '</div>'; //show-or-edit-settings
         return $table;
     }
 
