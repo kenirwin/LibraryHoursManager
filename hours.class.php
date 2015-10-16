@@ -16,8 +16,10 @@ class Hours {
     private function ExecutePrepared($query,$values) {
         try {
             print ($query);
+            print_r ($values);
             $stmt=$this->db->prepare($query);
             $stmt->execute($values);
+            print '<li>Rows affected: ' . $stmt->rowCount() . '</li>'.PHP_EOL;
         } catch (PDOException $ex) {
             print $ex->getMessage;
         }
@@ -96,39 +98,36 @@ class Hours {
     
 
     // Insert & Update functions
-    
-    public function UpdateTimeframe($req) {
+
+    public function UpdatePreset($req) {
         $req = json_decode($req);
-        print_r($req);
+        if (isset($req->preset_id) && ($req->preset_id != '')) {
+            $q2 = 'update presets SET name=?, rank=? WHERE id=?';
+            $v2 = array($req->preset_name, $req->rank, $req->preset_id);
+            $this->ExecutePrepared($q2,$v2);
+        }
+        else { //if new preset
+            $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';
+            $v1 = array ($req->preset_name,$req->rank);
+            print "<li>$q1</li>";
+            print_r ($v1);
+            $this->ExecutePrepared($q1,$v1);
+            $req->preset_id = $this->db->lastInsertId();
+        }
+        return $req->preset_id;
         print '<hr>'.PHP_EOL;
+    }
+    
+    public function UpdateSettings($req, $new_preset_id='') {
+        $req = json_decode($req);
+        print "<h2>$new_preset_id</h2>";
+        if (is_numeric($new_preset_id)) { $req->preset_id = $new_preset_id; }
         $settings_fields = array('opentime','closetime','latenight','closed');
         $onetime_fields = array('name','first_date','last_date');
         
         foreach ($onetime_fields as $f) {
             $values[$f] = $req->$f;
         }
-        if (isset($req->preset_id) && ($req->preset_id != '')) {
-            $q1 = 'update timeframes SET name=?,first_date=?,last_date=? WHERE apply_preset_id = ?';
-            $v1 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
-            $this->ExecutePrepared($q1,$v1);
-            $q2 = 'update presets SET name=?, rank=? WHERE id=?';
-            $v2 = array($req->name, $req->rank, $req->preset_id);
-            $this->ExecutePrepared($q2,$v2);
-        }
-        else { //if new preset
-            $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';
-            $v1 = array ($req->name,$req->rank);
-            print "<li>$q1</li>";
-            print_r ($v1);
-            $this->ExecutePrepared($q1,$v1);
-            $req->preset_id = $this->db->lastInsertId();
-            $q2 = 'INSERT INTO timeframes (`name`,`first_date`,`last_date`,`apply_preset_id`) VALUES (?,?,?,?)';
-            $v2 = array($req->name,$req->first_date,$req->last_date,$req->preset_id);
-            print "<li>$q2</li>";
-            print_r ($v2);
-            $this->ExecutePrepared($q2,$v2);
-        }
-
         foreach ($this->days as $day) {
             if (isset($req->settings_key->$day)) { 
                 $query_type = 'update';
@@ -152,33 +151,9 @@ class Hours {
             }
             if ($query_type == 'update') {
                 $q= 'UPDATE `settings` SET opentime="'.$req->opentime->$day.'", closetime="'.$req->closetime->$day.'", latenight="'.$latenight.'", closed="'.$closed.'" WHERE settings_key='.$settings_key;
-                /*
-                  I couldn't get this prepared-query statement section to work
-                  -- kept getting a message that the number of tokens and 
-                  values didn't match
-                
-
-                $tokens = array();
-                foreach ($settings_fields as $k=>$v) {
-                    array_push($tokens, $v.'=?');
-                }
-                array_push($settings_values, $day, $req->preset_id);
-                $q='UPDATE `settings` SET '.join(',',$tokens). ' WHERE `day`=? AND `preset_id`=?';
-                print "<li>$q: ";
-
-                print_r($settings_values);
-                print "SV: ".sizeof($settings_values)."<BR>";
-                try {
-                    $stmt = $this->db->prepare($q);
-                    $stmt->execute(array($settings_values));
-                }
-                catch (PDOException $ex) {
-                    print $ex->getMessage();
-                }
-                */
             }
             elseif ((isset($req->opentime->$day) & isset($req->closetime->$day)) || $closed == 'Y') {
-                    $q= 'INSERT INTO `settings`(day,preset_id,opentime,closetime,latenight,closed) VALUES ("'.$day.'","'.$req->preset_id.'","'.$req->opentime->$day.'", "'.$req->closetime->$day.'", "'.$latenight.'", "'.$closed.'")';
+                $q= 'INSERT INTO `settings`(day,preset_id,opentime,closetime,latenight,closed) VALUES ("'.$day.'","'.$req->preset_id.'","'.$req->opentime->$day.'", "'.$req->closetime->$day.'", "'.$latenight.'", "'.$closed.'")';
             }
             if (isset($q)) {
                 print '<li>'.$q;
@@ -189,19 +164,37 @@ class Hours {
                     print '<li>'.$ex->getMessage();
                 }
             }
-            
         }
-        // do daily updates
+        print '<hr>'.PHP_EOL;
+    }
+    
+    public function UpdateTimeframe($req, $new_preset_id) {
+        $req = json_decode($req);
+        print_r($req);
+        $req->first_date = date("Y-m-d", strtotime ($req->first_date));
+        $req->last_date = date("Y-m-d", strtotime ($req->last_date));
+        if (isset($req->timeframe_id) && ($req->timeframe_id != '')) {
+            $q = 'update timeframes SET name=?,first_date=?,last_date=? WHERE timeframe_id = ?';
+            $v = array($req->name,$req->first_date,$req->last_date,$req->timeframe_id);
+            $this->ExecutePrepared($q,$v);
+        }
+        else { //if new timeframe
+            if (is_numeric($new_preset_id)) { $req->use_preset = $new_preset_id; }
+            $q = 'INSERT INTO timeframes (name,first_date,last_date,apply_preset_id) VALUES (?,?,?,?)';
+            $v = array($req->name,$req->first_date,$req->last_date,$req->use_preset);
+            $this->ExecutePrepared($q,$v);
+        }
+        print '<hr>'.PHP_EOL;
     }
 
     public function DeleteTimeframe($id) {
         //        presets.id; settings.preset_id; timeframes.apply_preset_id;
-        $q1 = 'DELETE FROM presets WHERE id = ?';
-        $q2 = 'DELETE FROM settings WHERE preset_id = ?';
+        //        $q1 = 'DELETE FROM presets WHERE id = ?';
+        //$q2 = 'DELETE FROM settings WHERE preset_id = ?';
         $q3 = 'DELETE FROM timeframes WHERE apply_preset_id = ?';
         $v = array($id);
-        $this->ExecutePrepared($q1,$v);
-        $this->ExecutePrepared($q2,$v);
+        //$this->ExecutePrepared($q1,$v);
+        //$this->ExecutePrepared($q2,$v);
         $this->ExecutePrepared($q3,$v);
     }
     
@@ -218,7 +211,7 @@ class Hours {
     }
 
     public function GetTimeframesAndRanks () {
-        $q = 'SELECT timeframes.name as name, first_date,last_date,apply_preset_id,rank FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
+        $q = 'SELECT timeframes.name as name, timeframes.timeframe_id as id,first_date,last_date,apply_preset_id,rank FROM timeframes,presets where timeframes.apply_preset_id = presets.id';
         $stmt = $this->db->prepare($q);
         $stmt->execute();
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));

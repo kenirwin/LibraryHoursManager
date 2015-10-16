@@ -15,7 +15,7 @@ EOT;
         $table .= '<div id="new-timeframe-button" class="button">New Timeframe</div>'.PHP_EOL;
         $table .= '<table id="timeframe-picker-table">'.PHP_EOL;
         foreach($timeframes as $t) {
-            $table .= '<tr data-preset-id="'.$t->apply_preset_id.'"><td>'.$t->name.'</td><td>'.$t->first_date.'</td><td>'.$t->last_date.'</td><td>'.$t->rank.'</td><td><a href="edit.php?action=delete_preset&preset_id='.$t->apply_preset_id.'" class="button delete-button">x</a></td></tr>'.PHP_EOL;
+            $table .= '<tr data-timeframe-id="'.$t->id.'" data-preset-id="'.$t->apply_preset_id.'"><td>'.$t->name.'</td><td>'.$t->first_date.'</td><td>'.$t->last_date.'</td><td>'.$t->rank.'</td><td><a href="edit.php?action=delete_preset&preset_id='.$t->apply_preset_id.'" class="button delete-button">x</a></td></tr>'.PHP_EOL;
         }
         $table .='</table>'.PHP_EOL;
         $table .='</div>'.PHP_EOL;
@@ -29,11 +29,13 @@ EOT;
         $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;
         $table .= $this->FormRow('preset_id', $details[0]->preset_id, 'hidden');
+        $table .= $this->FormRow('timeframe_id', $details[0]->timeframe_id, 'hidden');
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         //        $table .= $this->RankPulldown($details[0]->rank);
         $table .= $this->SettingsSelectorPulldown($hours, $id);
+        $table .= $this->FormRow('action[]','submit_timeframe_details','hidden');
         $table .= '<div id="settings-placeholder"></div>'.PHP_EOL;
         $table .= '<input type="submit">'.PHP_EOL;
         $table .= '</form>'.PHP_EOL;
@@ -43,18 +45,24 @@ EOT;
     public function ShowPresetDetails($details,$id,$display_action="show") {
         $details = json_decode($details);
         $table .= '<h2>Settings</h2>'.PHP_EOL;
-        $table .= $this->FormRow('preset_name',$details->name, 'text');
-        $table .= 'rank: <select name="rank">'.PHP_EOL;
-        $table .= ' <option>Select Rank</option>'.PHP_EOL;
-        $table .= ' <option value="1">1 - General Time Period</option>'.PHP_EOL;
-        $table .= ' <option value="1">2 - Special Time Period</option>'.PHP_EOL;
-        $table .= '</select><br />'.PHP_EOL;
-        $table .= $this->ShowDays($details, $display_action);
-        if (isset($details[0]->preset_id)) {
-            $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
+        if ($display_action == "edit") {
+            $table .= $this->FormRow('action[]','submit_settings_details','hidden');
+            $table .= $this->FormRow('preset_name',$details[0]->name, 'text');
+            $table .= 'rank: <select name="rank">'.PHP_EOL;
+            $table .= ' <option>Select Rank</option>'.PHP_EOL;
+            $table .= ' <option value="1">1 - General Time Period</option>'.PHP_EOL;
+            $table .= ' <option value="1">2 - Special Time Period</option>'.PHP_EOL;
+            $table .= '</select><br />'.PHP_EOL;
         }
         else { 
-            $table .= '<input type="hidden" name="action" value="submit_new_preset">'.PHP_EOL;
+            $table .= "preset_name: ".$details[0]->name.'<br />';
+        }
+        $table .= $this->ShowDays($details, $display_action);
+        if (isset($details[0]->preset_id)) {
+            $table .= '<input type="hidden" name="action[]" value="submit_preset_values">'.PHP_EOL;
+        }
+        else { 
+            $table .= '<input type="hidden" name="action[]" value="submit_new_preset">'.PHP_EOL;
         }
 
         return $table;

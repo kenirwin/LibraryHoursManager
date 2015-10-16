@@ -24,7 +24,7 @@
                $('#timeframe-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
                    $(this).addClass('highlight');
-                   $.ajax({url: 'ajax-admin.php?action=show-timeframe&id='+$(this).attr('data-preset-id'), success: function(result) {
+                   $.ajax({url: 'ajax-admin.php?action=show-timeframe&id='+$(this).attr('data-preset-id')+'&timeframe_id='+$(this).attr('data-timeframe-id'), success: function(result) {
                        $('#preset-details').html(result);
                        BindTimeframeFields();
                        var usepreset = $('select[name="use_preset"]').val();
@@ -64,17 +64,33 @@ include ("admin.class.php");
 $hours = new Hours();
 $admin = new HoursAdmin(); 
 
-if (isset($_REQUEST['action'])) {
-    switch ($_REQUEST['action']) {
-    case ('submit_preset_values'):
-        $hours->UpdateTimeframe(json_encode($_REQUEST));        
-        break;
-    case ('submit_new_preset'):
-        $hours->UpdateTimeframe(json_encode($_REQUEST));
-        break;
-    case ('delete_preset'):
+print_r ($_REQUEST);
+
+
+if (is_array($_REQUEST['action'])) {
+    if (in_array('delete_preset',$_REQUEST['action'])) {
         $hours->DeleteTimeframe($_REQUEST['preset_id']);
-        break;
+    }
+    else {
+        $preset_id = '';
+        if (in_array('submit_new_preset', $_REQUEST['action'])) {
+            $preset_id = $hours->UpdatePreset(json_encode($_REQUEST));
+        }
+        if (in_array('submit_settings_details',$_REQUEST['action'])) {
+            $hours->UpdateSettings(json_encode($_REQUEST),$preset_id);
+        }
+        if (in_array('submit_timeframe_details', $_REQUEST['action'])) {
+            $hours->UpdateTimeframe(json_encode($_REQUEST), $preset_id);
+        }
+        /*
+
+        if (in_array('submit_preset_values',$action)) {
+
+        }
+        elseif (in_array('submit_new_preset', $action)) {
+            $hours->UpdateTimeframe(json_encode($_REQUEST));
+        }
+        */
     }
 }
 else { 
