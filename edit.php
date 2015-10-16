@@ -10,15 +10,36 @@
          $(function() {
              $('select[name="use_preset"]').change(function() {
                  $.ajax({url: 'ajax-admin.php?action=show-preset&id='+$(this).val(), success: function(result) {
-                       $('#settings-placeholder').html(result);
-                   }});
+                     $('#settings-placeholder').html(result);
+                 }
+                  });
              });
-
-
+             
              $('input[name="first_date"]').datepicker();
              $('input[name="last_date"]').datepicker();
          });
      }
+     
+     function BindSettingsFields() {
+         alert ('biteme');
+         $(function() {
+             $('#edit-settings-button').click(function() {
+                 alert ('trying');
+                 /*
+                 var preset_id = $(this).attr('data-preset-id');
+                 alert (preset_id);
+
+                 $.ajax({url: 'ajax-admin.php?action=edit-preset&id='+preset_id, success: function (result) {
+                     alert ('got something');
+                     //                     $('#settings-placeholder').html(result);
+                 }
+                  });
+
+*/                 
+             });
+         });
+     }
+
      
            $(function() {
                $('#timeframe-picker tr').click(function() {

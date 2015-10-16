@@ -44,7 +44,14 @@ EOT;
 
     public function ShowPresetDetails($details,$id,$display_action="show") {
         $details = json_decode($details);
+        if ($display_action == "show") {
+            $edit_button = '<div class="button" id="edit-settings-button" data-preset-id="'.$details[0]->preset_id.'">Edit</a></div>';
+        }
+        else { 
+            $edit_button = '';
+        }
         $table .= '<h2>Settings</h2>'.PHP_EOL;
+        $table .= $edit_button.'<br/>'.PHP_EOL;
         if ($display_action == "edit") {
             $table .= $this->FormRow('action[]','submit_settings_details','hidden');
             $table .= $this->FormRow('preset_name',$details[0]->name, 'text');
