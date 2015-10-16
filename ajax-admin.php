@@ -13,11 +13,15 @@ if (isset($_REQUEST['action'])) {
         print ($admin->EditTimeframeDetails());
         break;
     case 'show-preset':
-        print_r ($_REQUEST);
+        if ($_REQUEST['id'] == 'new') {
+            $details = $hours->GetSettingsDetails($_REQUEST['id']);
+            print ($admin->ShowPresetDetails($details, $_REQUEST['id'],"edit"));
+        }
         //      $details = $hours->GetTimeframeDetails($_REQUEST['id']);
-        $details = $hours->GetSettingsDetails($_REQUEST['id']);
-        print ($admin->EditPresetDetails($details, $_REQUEST['id']));
-        print $details;
+        else {
+            $details = $hours->GetSettingsDetails($_REQUEST['id']);
+            print ($admin->ShowPresetDetails($details, $_REQUEST['id'],"show"));
+        }
         break;
     }
 }

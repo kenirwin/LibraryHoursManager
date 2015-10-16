@@ -40,10 +40,10 @@ EOT;
         return $table;
     }
 
-    public function EditPresetDetails($details) {
+    public function ShowPresetDetails($details,$id,$display_action="show") {
         $details = json_decode($details);
         $table .= '<h2>Settings</h2>'.PHP_EOL;
-        $table .= $this->FormDays($details);
+        $table .= $this->ShowDays($details, $display_action);
         if (isset($details[0]->preset_id)) {
             $table .= '<input type="hidden" name="action" value="submit_preset_values">'.PHP_EOL;
         }
@@ -92,13 +92,13 @@ EOT;
         }
     }
     
-    private function FormDays($arr) {
+    private function ShowDays($arr,$display_action) {
         $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
         $table  = '<table>'.PHP_EOL;
         $table .= '<tr><td>Day</td><td>Open Time</td></td><td>Close Time</td><td>Open Past Midnight</td><td>Closed</td></tr>'.PHP_EOL;
         foreach ($days as $day) {
             $table .= '<tr><td>'.$day.'</td>';
-            $table .= $this->FindDayValues($day, $arr);
+            $table .= $this->FindDayValues($day, $arr, $display_action);
             $table .= '</tr>'.PHP_EOL;
             $table .= '</tr>';
         }
@@ -106,32 +106,71 @@ EOT;
         return $table;
     }
 
-    private function FindDayValues($day, $arr) {
+    private function Checkbox($status="unchecked") {
+        if ($status == "checked") {
+            return '&#10004;';
+        }
+        else {
+            return '&square;';
+        }
+    }
+
+    private function FindDayValues($day, $arr, $display_action) {
         foreach ($arr as $day_settings) {
             if ($day_settings->day == $day) {
                 if ($day_settings->closed == 'Y') {
-                    $closed = '<input type="checkbox" name="closed['.$day_settings->day.']" checked />'.PHP_EOL;
+                    if ($display_action == "edit") {
+                        $closed = '<input type="checkbox" name="closed['.$day_settings->day.']" checked />'.PHP_EOL;
+                    }
+                    else {
+                        $closed = $this->Checkbox("checked");
+                    }
                 }
                 else {
-                    $closed = '<input type="checkbox" name="closed['.$day_settings->day.']"/>'.PHP_EOL;
+                    if ($display_action == "edit") {
+                        $closed = '<input type="checkbox" name="closed['.$day_settings->day.']"/>'.PHP_EOL;
+                    }
+                    else {
+                        $closed = $this->Checkbox();
+                    }
                 }
 
                 if ($day_settings->latenight == 'Y') {
-                    $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']" checked />'.PHP_EOL;
+                    if ($display_action == "edit") {
+                        $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']" checked />'.PHP_EOL;
+                    }
+                    else {
+                        $open_late = $this->Checkbox("checked");
+                    }
                 }
                 else {
-                    $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
+                    if ($display_action == "edit") {
+                        $open_late = '<input type="checkbox" name="latenight['.$day_settings->day.']"/>'.PHP_EOL;
+                    }
+                    else { 
+                        $open_late = $this->Checkbox();
+                    }
                 }
 
                 $hidden_settings_key = '<input type="hidden" name="settings_key['.$day.']" value="'.$day_settings->settings_key.'" />';
 
-                return '<td>'.$hidden_settings_key.'<input type="text" name="opentime['.$day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+                if ($display_action == "edit") {
+                    return '<td>'.$hidden_settings_key.'<input type="text" name="opentime['.$day.']" value="'.$day_settings->opentime.'"></td><td><input type="text" name="closetime['.$day.']" value="'.$day_settings->closetime.'"></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+                }
+                else {
+                    return '<td>'.$day_settings->opentime.'</td><td>'.$day_settings->closetime.'</td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+                }
             }
         }
         // if day settings not found
         $closed = '<input type="checkbox" name="closed['.$day.']"/>'.PHP_EOL;
         $open_late = '<input type="checkbox" name="latenight['.$day.']"/>'.PHP_EOL;
-        return '<td><input type="text" name="opentime['.$day.']" value=""></td><td><input type="text" name="closetime['.$day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+        if ($display_action == "edit") {
+            return '<td><input type="text" name="opentime['.$day.']" value=""></td><td><input type="text" name="closetime['.$day.']" value=""></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+        }
+        else { 
+            return '<td></td><td></td><td>'.$open_late.'</td><td>'.$closed.'</td>'.PHP_EOL;
+        }
     }
 
     /* Graphing functions */
