@@ -44,9 +44,9 @@
 
                });
                
-               $('.delete-button').click(function(event) {
+               $('.delete-timeframe-button').click(function(event) {
                    var setting_name = $(this).parent().parent().children(':first-child').text();
-                   var r = confirm('Really delete this preset ('+setting_name+') and all its settings?');
+                   var r = confirm('Really delete this timeframe ('+setting_name+')?');
                    if (r == false) {
                        event.preventDefault();
                        event.stopPropagation();
@@ -64,12 +64,9 @@ include ("admin.class.php");
 $hours = new Hours();
 $admin = new HoursAdmin(); 
 
-print_r ($_REQUEST);
-
-
 if (is_array($_REQUEST['action'])) {
-    if (in_array('delete_preset',$_REQUEST['action'])) {
-        $hours->DeleteTimeframe($_REQUEST['preset_id']);
+    if (in_array('delete_timeframe',$_REQUEST['action'])) {
+        $hours->DeleteTimeframe($_REQUEST['timeframe_id']);
     }
     else {
         $preset_id = '';
