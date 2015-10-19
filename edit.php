@@ -27,10 +27,8 @@
          $(function() {
              $('#edit-settings-button').click(function() {
                  var preset_id = $(this).attr('data-preset-id');
-                 alert (preset_id);
-
+                 $('#edit-settings-button').hide();
                  $.ajax({url: 'ajax-admin.php?action=edit-preset&id='+preset_id, success: function (result) {
-                     alert (result);
                      $('#show-or-edit-settings').html(result);
                  }
                   });
@@ -51,8 +49,8 @@
                        var usepreset = $('select[name="use_preset"]').val();
                  $.ajax({url: 'ajax-admin.php?action=show-preset&id='+usepreset, success: function(result) {
                        $('#settings-placeholder').html(result);
-                   }});
-
+                       BindSettingsFields();
+                 }});
                    }});
                });
 
