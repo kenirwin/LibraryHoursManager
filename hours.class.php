@@ -15,13 +15,14 @@ class Hours {
     
     private function ExecutePrepared($query,$values) {
         try {
-            print ($query);
-            print_r ($values);
+            //            print ($query);
+            //print_r ($values);
             $stmt=$this->db->prepare($query);
             $stmt->execute($values);
-            print '<li>Rows affected: ' . $stmt->rowCount() . '</li>'.PHP_EOL;
+            return $stmt;
         } catch (PDOException $ex) {
-            print $ex->getMessage;
+            print $ex->getMessage();
+            return $ex->getMessage();
         }
     }
 
@@ -191,6 +192,58 @@ class Hours {
         $q = 'DELETE FROM timeframes WHERE timeframe_id = ?';
         $v = array($id);
         $this->ExecutePrepared($q,$v);
+    }
+
+    // Exceptions / jTables functions
+
+    public function ExceptionsList($jtSorting='date',$jtStartIndex=0,$jtPageSize=100) {        
+        $jTableResults = array();
+        $rows = array();
+        $q = 'SELECT COUNT(*) AS RecordCount FROM exceptions';
+        $stmt = $this->ExecutePrepared($q);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $recordCount = $row['RecordCount'];
+        $q2 = 'SELECT * FROM exceptions ORDER BY '.$jtSorting.' LIMIT '.$jtStartIndex.', '.$jtPageSize.';';
+        $stmt = $this->ExecutePrepared($q2);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $rows[] = $row;
+        }
+        $jTableResult['Result'] = 'OK';
+        $jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['Records'] = $rows;
+        return (json_encode($jTableResult));
+    }
+
+    public function ExceptionsCreate($req) {
+        $jTableResult = array();
+        $q = 'INSERT INTO exceptions (date,opentime,closetime,latenight,closed) VALUES (?,?,?,?,?)';
+        $v = array ($req['date'], $req['opentime'], $req['closetime'], $req['latenight'], $req['closed']);
+        $stmt = $this->ExecutePrepared($q,$v);
+        
+        $q2 = 'SELECT * FROM exceptions WHERE except_id = LAST_INSERT_ID();';
+        $stmt = $this->ExecutePrepared($q2);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $jTableResult['Result'] = 'OK';
+        $jTableResult['Record'] = $row;
+        return (json_encode($jTableResult));
+    }
+    
+    public function ExceptionsUpdate($req) {
+        $q = 'UPDATE exceptions SET opentime=?,closetime=?,latenight=?,closed=? WHERE except_id=?';
+        $v = array ($req['opentime'], $req['closetime'],$req['latenight'],$req['closed'],$req['except_id']);
+        $stmt = $this->ExecutePrepared($q,$v);
+        $jTableResult = array();
+        $jTableResult['Result'] = 'OK';
+        return (json_encode($jTableResult));
+    }
+    
+    public function ExceptionsDelete($req) {
+        $q = 'DELETE FROM exceptions WHERE except_id = ?';
+        $v = array ($req['except_id']);
+        $stmt = $this->ExecutePrepared($q,$v);
+        $jTableResult = array();
+        $jTableResult['Result'] = 'OK';
+        return (json_encode($jTableResult));
     }
     
     // JSON functions
