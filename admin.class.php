@@ -61,7 +61,7 @@ EOT;
             $table .= 'rank: <select name="rank">'.PHP_EOL;
             $table .= ' <option>Select Rank</option>'.PHP_EOL;
             $table .= ' <option value="1">1 - General Time Period</option>'.PHP_EOL;
-            $table .= ' <option value="1">2 - Special Time Period</option>'.PHP_EOL;
+            $table .= ' <option value="2">2 - Special Time Period</option>'.PHP_EOL;
             $table .= '</select><br />'.PHP_EOL;
         }
         else { 
