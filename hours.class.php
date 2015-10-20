@@ -288,18 +288,19 @@ class Hours {
     }
 
     public function GetTimeframeDetails ($id) {
-        $q = 'SELECT * FROM settings,timeframes,presets where presets.id = settings.preset_id and apply_preset_id = presets.id and settings.preset_id = ?';
+        $q = 'SELECT timeframes.*, presets.rank FROM settings,timeframes,presets where presets.id = settings.preset_id and apply_preset_id = presets.id and settings.preset_id = ?';
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($id));
         return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function GetSettingsDetails ($id) {
-        $q = 'SELECT settings.*, presets.name, presets.id FROM settings,presets WHERE settings.preset_id = presets.id and settings.preset_id = ?';
+        $q = 'SELECT settings.*, presets.* FROM settings,presets WHERE settings.preset_id = presets.id and settings.preset_id = ?';
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($id));
         return json_encode($stmt->fetchall(PDO::FETCH_ASSOC));
     }
+    
 } 
 
 

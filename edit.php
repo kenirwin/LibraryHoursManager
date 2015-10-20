@@ -103,15 +103,9 @@ if (is_array($_REQUEST['action'])) {
         if (in_array('submit_timeframe_details', $_REQUEST['action'])) {
             $hours->UpdateTimeframe(json_encode($_REQUEST), $preset_id);
         }
-        /*
-
         if (in_array('submit_preset_values',$action)) {
-
+            $hours->UpdatePreset(json_encode($_REQUEST));
         }
-        elseif (in_array('submit_new_preset', $action)) {
-            $hours->UpdateTimeframe(json_encode($_REQUEST));
-        }
-        */
     }
 }
 else { 

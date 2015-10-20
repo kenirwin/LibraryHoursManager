@@ -24,7 +24,7 @@ EOT;
 
     public function EditTimeframeDetails ($json,$hours,$id) {
         if (isset($json)) { $details = json_decode($json); }
-        //        print_r($details); print '<hr>'.PHP_EOL;
+        //        print '<pre>';print_r($details); print '</pre>'; print '<hr>'.PHP_EOL;
         $table  = '<div id="edit-timeframe">'.PHP_EOL;
         $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="edit.php">'.PHP_EOL;
@@ -56,12 +56,15 @@ EOT;
         }
         $table .= '<div id="show-or-edit-settings">'.PHP_EOL;
         if ($display_action == "edit") {
+            //            print '<pre>'; print_r ($details); print '</pre>';
             $table .= $this->FormRow('action[]','submit_settings_details','hidden');
             $table .= $this->FormRow('preset_name',$details[0]->name, 'text');
             $table .= 'rank: <select name="rank">'.PHP_EOL;
             $table .= ' <option>Select Rank</option>'.PHP_EOL;
-            $table .= ' <option value="1">1 - General Time Period</option>'.PHP_EOL;
-            $table .= ' <option value="2">2 - Special Time Period</option>'.PHP_EOL;
+            if ($details[0]->rank == 1) {$rankselect1 = ' selected';}
+            elseif($details[0]->rank == 2) {$rankselect2 = ' selected'; }
+            $table .= ' <option value="1"'.$rankselect1.'>1 - General Time Period</option>'.PHP_EOL;
+            $table .= ' <option value="2"'.$rankselect2.'>2 - Special Time Period</option>'.PHP_EOL;
             $table .= '</select><br />'.PHP_EOL;
         }
         else { 
