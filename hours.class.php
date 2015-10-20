@@ -118,7 +118,9 @@ class Hours {
         if (isset($req->preset_id) && ($req->preset_id != '')) {
             $q2 = 'update presets SET name=?, rank=? WHERE id=?';
             $v2 = array($req->preset_name, $req->rank, $req->preset_id);
-            $this->ExecutePrepared($q2,$v2);
+            print '<li>'.$q2.'</li>';
+            print_r ($v2);
+            print_r($this->ExecutePrepared($q2,$v2));
         }
         else { //if new preset
             $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';

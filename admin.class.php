@@ -58,6 +58,7 @@ EOT;
         if ($display_action == "edit") {
             //            print '<pre>'; print_r ($details); print '</pre>';
             $table .= $this->FormRow('action[]','submit_settings_details','hidden');
+            $table .= $this->FormRow('preset_id',$id,'hidden');
             $table .= $this->FormRow('preset_name',$details[0]->name, 'text');
             $table .= 'rank: <select name="rank">'.PHP_EOL;
             $table .= ' <option>Select Rank</option>'.PHP_EOL;
