@@ -13,7 +13,6 @@ EOT;
         $timeframes = json_decode($json);
         $table  = '<div id="timeframe-picker">'.PHP_EOL;
         $table .= '<div id="new-timeframe-button" class="button">New Timeframe</div>'.PHP_EOL;
-        $table .= '<div id="manage-exceptions-button" class="button">Manage Exceptions</div>'.PHP_EOL;
         $table .= '<table id="timeframe-picker-table">'.PHP_EOL;
         foreach($timeframes as $t) {
             $table .= '<tr data-timeframe-id="'.$t->id.'" data-preset-id="'.$t->apply_preset_id.'"><td>'.$t->name.'</td><td>'.$t->first_date.'</td><td>'.$t->last_date.'</td><td>'.$t->rank.'</td><td><a href="edit.php?action[]=delete_timeframe&timeframe_id='.$t->id.'" class="button delete-button delete-timeframe-button">x</a></td></tr>'.PHP_EOL;

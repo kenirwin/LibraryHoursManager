@@ -76,11 +76,6 @@
                        event.stopPropagation();
                    }
                });
-               
-               $('#manage-exceptions-button').click(function() {
-                   location.href = 'manage_exceptions.php';
-               });
-
            });
 </script>
 </head>
@@ -96,9 +91,6 @@ $admin = new HoursAdmin();
 if (is_array($_REQUEST['action'])) {
     if (in_array('delete_timeframe',$_REQUEST['action'])) {
         $hours->DeleteTimeframe($_REQUEST['timeframe_id']);
-    }
-    elseif (in_array('manage_exceptions',$_REQUEST['action'])) {
-        $hours->ManageExceptions();
     }
     else {
         $preset_id = '';
