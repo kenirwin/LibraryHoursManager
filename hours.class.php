@@ -35,6 +35,8 @@ class Hours {
             $end = $req['last_date'];
         }
         else { $end = $this->GetDate("last"); }
+        $start = date("Y-m-d", strtotime($start));
+        $end = date("Y-m-d", strtotime($end));
         $date = $start; 
         $output = "";
         while ($date <= $end) {

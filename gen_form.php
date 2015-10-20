@@ -11,14 +11,16 @@
 <script type="text/javascript">
      $(function() {
          $('#nav-buttons li').button();
+
+         $('.date-field').datepicker();
      });
 </script>
 <?
 include ("nav.php");
 ?>
 <form action="generate.php">
-     First Date: <input type="text" name="first_date"><br />
-     Last Date: <input type="text" name="last_date"><br />
+     First Date: <input type="text" name="first_date" class="date-field"><br />
+     Last Date: <input type="text" name="last_date" class="date-field"><br />
      Format: 
      <select name="format">
      <option value="xmlIthaca">XML</option>
