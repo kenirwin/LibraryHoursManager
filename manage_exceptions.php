@@ -10,10 +10,13 @@
 	
   </head>
   <body>
+<? include ("nav.php");  ?>
+
 	<div id="ExceptionsTableContainer" style="width: 600px;"></div>
 	<script type="text/javascript">
 
 		$(document).ready(function () {
+            $('#nav-buttons li').button();
 		    //Prepare jTable
 			$('#ExceptionsTableContainer').jtable({
 				title: 'Exceptions Table',
@@ -75,7 +78,7 @@
 		});
 
 	</script>
- 
+
 <div id="DeleteSelectedButton">Delete Selected Rows</div>
   </body>
 </html>

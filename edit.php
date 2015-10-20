@@ -4,6 +4,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <link rel="stylesheet" href="style.css" />
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <link href="lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
      function BindTimeframeFields() {
@@ -40,6 +43,8 @@
 
      
            $(function() {
+               $('#nav-buttons li').button();
+             
                $('#timeframe-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
                    $(this).addClass('highlight');
@@ -83,6 +88,7 @@
 <?
 include ("hours.class.php");
 include ("admin.class.php");
+include ("nav.php");
 
 $hours = new Hours();
 $admin = new HoursAdmin(); 

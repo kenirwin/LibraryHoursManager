@@ -3,6 +3,7 @@ body#edit {
     margin: 1em;
 }
 
+#nav { margin-bottom: 1em; }
 
 .button {
     border: 1px solid lightblue;
