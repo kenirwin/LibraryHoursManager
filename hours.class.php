@@ -115,7 +115,7 @@ class Hours {
 
     public function UpdatePreset($req) {
         $req = json_decode($req);
-        if (isset($req->preset_id) && ($req->preset_id != '')) {
+        if (isset($req->preset_id) && ($req->preset_id != '' && ($req->preset_id != 'new'))) {
             $q2 = 'update presets SET name=?, rank=? WHERE id=?';
             $v2 = array($req->preset_name, $req->rank, $req->preset_id);
             print '<li>'.$q2.'</li>';
