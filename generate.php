@@ -16,7 +16,7 @@ $libHours = new Hours;
 
 switch ($_REQUEST['action']) {
 case "getlist":
-    print ($libHours->ListDailyHours($format));
+    print ($libHours->ListDailyHours($format,$_REQUEST));
     break;
 case "oneday":
     if ($_REQUEST['date']) { 
@@ -24,6 +24,9 @@ case "oneday":
     }
     else { $date = date("Y-m-d"); }
     print ($libHours->GetHoursByDate($date,$format));
+    break;
+default: 
+    include ("gen_form.php");
     break;
 }
 

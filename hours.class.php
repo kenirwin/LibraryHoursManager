@@ -26,9 +26,15 @@ class Hours {
         }
     }
 
-    public function ListDailyHours ($format) {
-        $start = date("Y-m-d");
-        $end = $this->GetDate("last");
+    public function ListDailyHours ($format,$req) {
+        if (isset($req['first_date']) && $req['first_date'] != '') {
+            $start = $req['first_date'];
+        }
+        else { $start = $this->GetDate('first'); }
+        if (isset($req['last_date']) && $req['last_date'] != '') {
+            $end = $req['last_date'];
+        }
+        else { $end = $this->GetDate("last"); }
         $date = $start; 
         $output = "";
         while ($date <= $end) {
@@ -85,7 +91,7 @@ class Hours {
             }
         }
         else {
-            return ($q);
+            return ('Hours Unknown');
         }
     }
     
@@ -252,6 +258,8 @@ class Hours {
     }
 
     public function PrintGenerateForm () {
+        $first = $this->GetDate('first');
+        $last  = $this->GetDate('last');
         $form  = '<form action="generate.php">'.PHP_EOL;
         $form .= '';
         $form .= '<form>'.PHP_EOL;
