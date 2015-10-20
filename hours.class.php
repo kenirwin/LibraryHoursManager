@@ -28,7 +28,7 @@ class Hours {
 
     public function ListDailyHours ($format) {
         $start = date("Y-m-d");
-        $end = $this->GetLastDate();
+        $end = $this->GetDate("last");
         $date = $start; 
         $output = "";
         while ($date <= $end) {
@@ -89,11 +89,16 @@ class Hours {
         }
     }
     
-    public function GetLastDate () {
-        $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
+    public function GetDate ($position) { // position is "first" or "last"
+        if ($position == "last") {
+            $q = "SELECT last_date FROM timeframes ORDER BY last_date DESC LIMIT 0,1";
+        }
+        elseif ($position == "first") {
+            $q = "SELECT first_date FROM timeframes ORDER BY first_date ASC LIMIT 0,1";
+        }
         $stmt = $this->db->query($q);
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            return $row['last_date'];
+        while ($row = $stmt->fetch()) {
+            return $row[0];
         }
     } 
     
@@ -244,6 +249,13 @@ class Hours {
         $jTableResult = array();
         $jTableResult['Result'] = 'OK';
         return (json_encode($jTableResult));
+    }
+
+    public function PrintGenerateForm () {
+        $form  = '<form action="generate.php">'.PHP_EOL;
+        $form .= '';
+        $form .= '<form>'.PHP_EOL;
+        return $form;
     }
     
     // JSON functions
