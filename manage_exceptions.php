@@ -17,6 +17,10 @@
 		    //Prepare jTable
 			$('#ExceptionsTableContainer').jtable({
 				title: 'Exceptions Table',
+                                          selecting: true, //Enable selecting
+                                          multiselect: true, //Allow multiple selecting
+                                          selectingCheckboxes: true, //Show checkboxes on first column
+
 				actions: {
 					listAction: 'handle_exceptions.php?action=list',
 					createAction: 'handle_exceptions.php?action=create',
@@ -48,23 +52,30 @@
 					latenight: {
 						title: 'Late Night',
 						width: '20%',
-                                          options: { 'Y': 'Yes', 'N':'No'}
+                                          options: { 'N': 'No', 'Y': 'Yes'}
                                       },
 					closed: {
 						title: 'Closed',
 						width: '15%',
-                                          options: { 'Y': 'Yes', 'N':'No'}
+                                          options: { 'N': 'No', 'Y': 'Yes'}
                                       }
                     }
 
                 });
 
-			//Load person list from server
+			//Load list from server
 			$('#ExceptionsTableContainer').jtable('load');
+
+            //Delete selected 
+            $('#DeleteSelectedButton').button().click(function () {
+                var $selectedRows = $('#ExceptionsTableContainer').jtable('selectedRows');
+                $('#ExceptionsTableContainer').jtable('deleteRows', $selectedRows);
+            });
 
 		});
 
 	</script>
  
+<div id="DeleteSelectedButton">Delete Selected Rows</div>
   </body>
 </html>
