@@ -27,7 +27,7 @@
 					updateAction: 'handle_exceptions.php?action=update',
 					deleteAction: 'handle_exceptions.php?action=delete'
 				},
-
+                                          messages: {addNewRecord: '+ Add new Exception'},
 				fields: {
                     except_id: {
                             key: true,
