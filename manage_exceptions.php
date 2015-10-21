@@ -80,5 +80,21 @@
 	</script>
 
 <div id="DeleteSelectedButton">Delete Selected Rows</div>
+
+     <?
+     require_once('admin.class.php');
+require_once('hours.class.php');
+$hours = new Hours();
+$admin = new HoursAdmin();
+$times = $hours->GetTimeframesAndRanks();
+$exceptions = $hours->getJSON('exceptions');
+$graphJS = $admin->BuildGraphJS($times,$exceptions);
+print $graphJS;
+?>
+<h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
+<div class="demo-container">
+	<div id="placeholder" class="demo-placeholder"></div>
+</div>
+
   </body>
 </html>

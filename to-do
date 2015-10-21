@@ -1,6 +1,6 @@
 * develop testing scenarios
 * error checking / prevention
 * what happens after a submission on edit.php? show presets picker, etc?
-* add flot to manage_exceptions page
+* debug style conflicts when flot is on  manage_exceptions page
 * streamline js includes/version
 * more consistent visuals
