@@ -4,3 +4,6 @@
 * debug style conflicts when flot is on  manage_exceptions page
 * streamline js includes/version
 * more consistent visuals
+
+BUGS:
+* does a slash or other funny character in a timeframe break the flot? (it seemed to on 'Good Friday / Easter Holiday' 
