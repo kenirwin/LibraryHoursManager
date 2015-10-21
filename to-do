@@ -1,5 +1,4 @@
 * develop testing scenarios
 * error checking / prevention
 * what happens after a submission on edit.php? show presets picker, etc?
-* add index.php: generate.php, edit.php, manage_exceptions.php others?
 * add flot to manage_exceptions page
