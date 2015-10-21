@@ -20,10 +20,14 @@
                   }
                   });
              });
-             
-             $('input[name="first_date"]').datepicker();
              $('input[name="last_date"]').datepicker();
+             $('input[name="first_date"]').datepicker({
+                     onSelect: function (date) { SetLastDate(date); }
+                 });
          });
+         function SetLastDate(date) { 
+             $('input[name="last_date"]').datepicker("destroy").datepicker({defaultDate: date});
+         }
      }
      
      function BindSettingsFields() {
