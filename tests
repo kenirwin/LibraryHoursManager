@@ -1,0 +1,24 @@
+Timeframe: 
+ * fields left blank
+ * junk characters in name?
+ * non-date values in date fields?
+ * last_date before first_date?
+ * conflicting dates at same rank (1 or 2)
+
+Settings: 
+ * name field left blank
+ * no rank selected on settings
+ * Closed and hours listed in same day setting
+ * non-time values in open/close
+
+Manage exceptions:
+ * Closed and hours listed in same day setting
+ * non-time values in open/close
+
+Generate: 
+ * days in range with no known hours (maybe a JS alert?)
+ * non-date values in date fields?
+ * last_date before first_date?
+
+Delete settings (function doesn't exist yet)
+ * deleting a preset that's in use

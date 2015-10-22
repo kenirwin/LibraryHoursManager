@@ -1,9 +1,10 @@
-* develop testing scenarios
-* error checking / prevention
+* develop testing scenarios (see file: tests)
+* error checking / prevention (see file: tests)
 * what happens after a submission on edit.php? show presets picker, etc?
 * debug style conflicts when flot is on  manage_exceptions page
 * streamline js includes/version
 * more consistent visuals
+* delete mechanism for preset
 
 BUGS:
 * does a slash or other funny character in a timeframe break the flot? (it seemed to on 'Good Friday / Easter Holiday' 
