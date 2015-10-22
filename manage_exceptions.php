@@ -1,6 +1,6 @@
 <html>
   <head>
-
+    <link rel="stylesheet" href="style.css" />
     <link href="lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
 	<link href="lib/scripts/jtable/themes/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
 	
@@ -92,8 +92,8 @@ $graphJS = $admin->BuildGraphJS($times,$exceptions);
 print $graphJS;
 ?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
-<div class="demo-container">
-	<div id="placeholder" class="demo-placeholder"></div>
+<div class="flot-container">
+	<div id="placeholder" class="flot-placeholder"></div>
 </div>
 
   </body>
