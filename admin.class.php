@@ -1,7 +1,6 @@
 <?
 class HoursAdmin {
     private $js_includes = <<<EOT
-	<link href="./lib/scripts/flot/examples.css" rel="stylesheet" type="text/css">
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="./lib/scripts/flot/excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.time.js"></script>

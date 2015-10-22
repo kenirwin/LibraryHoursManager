@@ -123,8 +123,8 @@ else {
 <div id="preset-details"></div>
 <? print $graphJS; ?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
-<div class="demo-container">
-	<div id="placeholder" class="demo-placeholder"></div>
+<div class="flot-container">
+	<div id="placeholder" class="flot-placeholder"></div>
 </div>
 
 
