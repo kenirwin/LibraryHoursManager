@@ -1,8 +1,6 @@
 * develop testing scenarios (see file: tests)
 * error checking / prevention (see file: tests)
 * what happens after a submission on edit.php? show presets picker, etc?
-* debug style conflicts when flot is on  manage_exceptions page
-* streamline js includes/version
 * more consistent visuals
 * delete mechanism for preset
 * add tooltip to flot dates
