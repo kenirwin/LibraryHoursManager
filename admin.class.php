@@ -4,6 +4,7 @@ class HoursAdmin {
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="./lib/scripts/flot/excanvas.min.js"></script><![endif]-->
 	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.time.js"></script>
+	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.tooltip.min.js"></script>
 EOT;
 
     /* Display functions */
@@ -212,7 +213,9 @@ EOT;
         $js .= '   $.plot("#placeholder", '.$vars->idArray.', {'.PHP_EOL;
         $js .= '     xaxis: { mode: "time" },'.PHP_EOL;
         $js .= '     yaxis: { min:0, max: 4 },'.PHP_EOL;
-        $js .= '     series: { points: { show: true }, lines: { show:true} }'.PHP_EOL;
+        $js .= '     grid: { hoverable: true },'.PHP_EOL;
+        $js .= '     series: { points: { show: true }, lines: { show:true} },'.PHP_EOL;
+        $js .= '     tooltip: { show: true, xDateFormat: "%m/%d/%Y", content: "%x" }'.PHP_EOL;
         $js .= '   });'.PHP_EOL;
         $js .= '});'.PHP_EOL;
 		// $js .= '$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");'.PHP_EOL;
