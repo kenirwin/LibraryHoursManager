@@ -52,7 +52,7 @@
                $('#timeframe-picker tr').click(function() {
                    $(this).parent().children().removeClass('highlight');
                    $(this).addClass('highlight');
-                   $.ajax({url: 'ajax-admin.php?action=show-timeframe&id='+$(this).attr('data-preset-id')+'&timeframe_id='+$(this).attr('data-timeframe-id'), success: function(result) {
+                   $.ajax({url: 'ajax-admin.php?action=show-timeframe&preset_id='+$(this).attr('data-preset-id')+'&timeframe_id='+$(this).attr('data-timeframe-id'), success: function(result) {
                        $('#preset-details').html(result);
                        BindTimeframeFields();
                        var usepreset = $('select[name="use_preset"]').val();

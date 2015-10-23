@@ -4,6 +4,7 @@ Timeframe:
  * non-date values in date fields?
  * last_date before first_date?
  * conflicting dates at same rank (1 or 2)
+ * multiple timeframes with same settings
 
 Settings: 
  * name field left blank

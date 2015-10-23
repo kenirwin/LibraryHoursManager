@@ -6,7 +6,7 @@ $admin = new HoursAdmin;
 if (isset($_REQUEST['action'])) {
     switch ($_REQUEST['action']) {
     case 'show-timeframe':
-        $details = $hours->GetTimeframeDetails($_REQUEST['id']);
+        $details = $hours->GetTimeframeDetails($_REQUEST['timeframe_id']);
         print ($admin->EditTimeframeDetails($details,$hours,$_REQUEST['id']));
         break;
     case 'new-timeframe':
