@@ -10,10 +10,14 @@ body#edit {
     border-radius: .25em;
     display: inline;
     padding: .25em;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2e6e9e;
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
 }
 .button:hover {
     background-color: lightblue;
-    border-color: blue;
+    border-color: #2e6e9e;
 }
 #new-preset-button {
 
