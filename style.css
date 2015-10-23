@@ -1,3 +1,93 @@
+/* timeframes.php */
+body#edit { 
+    margin: 1em;
+}
+
+#nav { margin-bottom: 1em; }
+
+.button {
+    border: 1px solid lightblue;
+    border-radius: .25em;
+    display: inline;
+    padding: .25em;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2e6e9e;
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+}
+.button:hover {
+    background-color: lightblue;
+    border-color: #2e6e9e;
+}
+#new-preset-button {
+
+}
+a.delete-button {
+    border-color: red;
+    padding: .1em;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+a.delete-button:hover {
+    background-color: red;
+    color: white;
+}
+#presets-picker {
+    margin: .5em 0 1em 0;
+}
+.highlight {
+    background-color: yellow;
+}
+#timeframe-picker-table {
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+#timeframe-picker-table thead {
+    font-weight: bold;
+}
+#timeframe-picker-table td {
+    border: 1px solid #999;
+    text-align: center;
+    padding: .15em;
+}
+#timeframe-picker-table td:first-child {
+    text-align: left;
+}
+
+.flot-container {
+	box-sizing: border-box;
+	width: 850px;
+	height: 150px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.flot-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	line-height: 1.2em;
+}
+
+.legend table { /*flot*/
+	border-spacing: 5px;
+}
+
+
+/* calendar.php */ 
 #hours { 
   width: 100%; 
   border-collapse: collapse;

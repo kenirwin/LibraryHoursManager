@@ -1,6 +1,7 @@
 *~
 *bak
 config.php
-local*php
+local_headers.php
+local_footers.php
 getXML.sh
 hours.xml

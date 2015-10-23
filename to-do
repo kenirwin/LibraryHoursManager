@@ -1,0 +1,9 @@
+* develop testing scenarios (see file: tests)
+* error checking / prevention (see file: tests)
+* what happens after a submission on timeframes.php? show presets picker, etc?
+* more consistent visuals
+* delete mechanism for preset
+* add tooltip to flot dates
+
+BUGS:
+* does a slash or other funny character in a timeframe break the flot? (it seemed to on 'Good Friday / Easter Holiday' 

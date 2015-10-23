@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 06, 2015 at 03:16 PM
+-- Generation Time: Oct 22, 2015 at 04:53 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.4.16
 
@@ -20,12 +20,14 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `exceptions` (
-  `date` date DEFAULT NULL,
-  `opentime` varchar(50) NOT NULL,
-  `closetime` varchar(50) NOT NULL,
-  `latenight` enum('Y','N') NOT NULL,
-  `closed` enum('Y','N') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `except_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `opentime` varchar(50) DEFAULT NULL,
+  `closetime` varchar(50) DEFAULT NULL,
+  `latenight` enum('Y','N') DEFAULT NULL,
+  `closed` enum('Y','N') DEFAULT NULL,
+  PRIMARY KEY (`except_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `presets` (
   `name` varchar(50) NOT NULL,
   `rank` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -47,13 +49,15 @@ CREATE TABLE IF NOT EXISTS `presets` (
 --
 
 CREATE TABLE IF NOT EXISTS `settings` (
+  `settings_key` int(11) NOT NULL AUTO_INCREMENT,
   `preset_id` int(11) DEFAULT NULL,
   `day` enum('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') DEFAULT NULL,
   `opentime` varchar(50) DEFAULT NULL,
   `closetime` varchar(50) DEFAULT NULL,
   `latenight` enum('Y','N') NOT NULL DEFAULT 'N',
-  `closed` enum('Y','N') NOT NULL DEFAULT 'N'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='hourse of operation - starting Aug 2015';
+  `closed` enum('Y','N') NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`settings_key`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='hourse of operation - starting Aug 2015';
 
 -- --------------------------------------------------------
 
@@ -62,8 +66,10 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 
 CREATE TABLE IF NOT EXISTS `timeframes` (
+  `timeframe_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `first_date` date NOT NULL,
   `last_date` date NOT NULL,
-  `apply_preset_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `apply_preset_id` int(11) NOT NULL,
+  PRIMARY KEY (`timeframe_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
