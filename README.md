@@ -26,3 +26,6 @@ Currently, the values for these tables are entered manually. Hopefully future ve
 * Back-end database structure and PHP to generate XML (genereate.php, hours.class.php, etc) by Ken Irwin at Wittenberg University
 * the Manage Exceptions function uses the jTable plugin developed by Halil Ibrahim Kalkan and licensed under [MIT License] (http://opensource.org/licenses/MIT).
 
+## License
+
+This software is made available under the [Creative Commons Attribution-NonCommercial-ShareAlike (BY-NC-SA) 3.0 Unported License] (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US).
