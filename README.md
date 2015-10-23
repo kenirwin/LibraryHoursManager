@@ -32,6 +32,8 @@ This software uses MySQL and PHP on the server side; JavaScript/jQuery on the we
 You can also generate the XML file on the command line and capture the output using:
 `php generate.php action=getlist format=xmlIthaca > hours.xml`
 
+You can copy the **GetXML-sample.sh** to **GetXML.sh** and uncomment a method that works well for you to make command-line generation of the hours easier.
+
 Use the `calendar.php` file to read the resulting static *hours.xml* file.
 
 
