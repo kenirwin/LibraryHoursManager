@@ -10,7 +10,7 @@
   <body>
 <? include ("nav.php");  ?>
 
-	<div id="ExceptionsTableContainer" style="width: 600px;"></div>
+	<div id="ExceptionsTableContainer" style="width: 700px;"></div>
 	<script type="text/javascript">
 
 		$(document).ready(function () {
@@ -44,20 +44,20 @@
 					},
 					opentime: {
 						title: 'Open Time',
-						width: '22%'
+						width: '25%'
 					},
 					closetime: {
 						title: 'Close Time',
-						width: '22%'
+						width: '25%'
 					},
 					latenight: {
 						title: 'Late Night',
-						width: '20%',
+						width: '25%',
                                           options: { 'N': 'No', 'Y': 'Yes'}
                                       },
 					closed: {
 						title: 'Closed',
-						width: '15%',
+						width: '5%',
                                           options: { 'N': 'No', 'Y': 'Yes'}
                                       }
                     }
