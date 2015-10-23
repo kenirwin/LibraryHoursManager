@@ -13,6 +13,7 @@ EOT;
         $table  = '<div id="timeframe-picker">'.PHP_EOL;
         $table .= '<div id="new-timeframe-button" class="button">New Timeframe</div>'.PHP_EOL;
         $table .= '<table id="timeframe-picker-table">'.PHP_EOL;
+        $table .= '<thead><tr><td>Timeframe</td><td>First Date</td><td>Last Date</td><td>Rank</td><td>Delete</td></tr></thead>'.PHP_EOL;
         foreach($timeframes as $t) {
             $table .= '<tr data-timeframe-id="'.$t->id.'" data-preset-id="'.$t->apply_preset_id.'"><td>'.$t->name.'</td><td>'.$t->first_date.'</td><td>'.$t->last_date.'</td><td>'.$t->rank.'</td><td><a href="timeframes.php?action[]=delete_timeframe&timeframe_id='.$t->id.'" class="button delete-button delete-timeframe-button">x</a></td></tr>'.PHP_EOL;
         }

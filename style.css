@@ -39,6 +39,21 @@ a.delete-button:hover {
 .highlight {
     background-color: yellow;
 }
+#timeframe-picker-table {
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+#timeframe-picker-table thead {
+    font-weight: bold;
+}
+#timeframe-picker-table td {
+    border: 1px solid #999;
+    text-align: center;
+    padding: .15em;
+}
+#timeframe-picker-table td:first-child {
+    text-align: left;
+}
 
 .flot-container {
 	box-sizing: border-box;
