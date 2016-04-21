@@ -37,6 +37,6 @@ include ("nav.php");
      <form action="generate.php">
      <input type="hidden" name="action" value="oneday" />
      <label for="date">Choose date:</label>
-     <input type="text" class="date-field" />
+     <input type="text" name="date" class="date-field" />
      <input type="submit" />
      </form>
