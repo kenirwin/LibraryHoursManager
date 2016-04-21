@@ -1,0 +1,8 @@
+AuthUserFile /path/to/another/directory/.htpasswd
+AuthGroupFile /dev/null
+AuthName LibraryHours
+AuthType Basic
+
+<Limit GET POST PUT>
+require user username
+</Limit>

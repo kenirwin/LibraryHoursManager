@@ -15,7 +15,8 @@ This software uses MySQL and PHP on the server side; JavaScript/jQuery on the we
 1. Unzip or git-clone the files in a directory on your web server.
 2. Use the **sql_structure.sql** file to set up a new MySQL database.
 3. Copy the **config_sample.php** file to a new file called **config.php** and add the MySQL user, password, database, and host information. 
-4. Using a web browser, navigate to the **Timeframes** page and begin to populate the database by adding new timeframes. A timeframe will have:
+4. Copy the admin/htaccess sample file to admin/.htaccess and configure it to password-protect the admin directory. Please see your system administrator for assistance setting up the .htpasswd file.
+5. Using a web browser, navigate to the **Timeframes** page and begin to populate the database by adding new timeframes. A timeframe will have:
    * name
    * start date
    * end date
@@ -26,8 +27,8 @@ This software uses MySQL and PHP on the server side; JavaScript/jQuery on the we
         * close time
          * Y/N "open late", meaning "open past midnight"
           * Y/N "closed", meaning "closed all day"
-5. Once timeframes have been set up, individual exceptions to those hours (e.g. for holidays, etc) can be set up using the Exceptions page. Add dates and time for individual exceptions. 
-6. Once the timeframes and exceptions have been established for a period of time (e.g. a whole semester or year), you can generate the content for the hours.xml file using the "Generate XML Hours" button. Input the first and last dates for the file and generate the list of hours. The whole contents of the XML output should be saved in a file called hours.xml and placed in the web directory. You can also generate 
+6. Once timeframes have been set up, individual exceptions to those hours (e.g. for holidays, etc) can be set up using the Exceptions page. Add dates and time for individual exceptions. 
+7. Once the timeframes and exceptions have been established for a period of time (e.g. a whole semester or year), you can generate the content for the hours.xml file using the "Generate XML Hours" button. Input the first and last dates for the file and generate the list of hours. The whole contents of the XML output should be saved in a file called hours.xml and placed in the web directory. You can also generate 
 
 You can also generate the XML file on the command line and capture the output using:
 `php generate.php action=getlist format=xmlIthaca > hours.xml`

@@ -1,13 +1,13 @@
 <html>
 <head>
 <title>Documentation - Suma Retroactive Data Importer</title>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="../style.css">
 <meta name=viewport content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link rel="stylesheet" href="style.css" />
+
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
-    <link href="lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    <link href="../lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -21,7 +21,7 @@
 
 <?php
      include ("nav.php");
-$file =  file_get_contents("README.md");
+$file =  file_get_contents("../README.md");
 // crop the first line out so we can use customized header
 $lines = explode("\n", $file);
 //$file = implode("\n", array_slice($lines, 2));
@@ -32,7 +32,7 @@ print (RenderMarkdown($file));
 
 <?
 function PostJSON ($url, $json) {
-include ("config.php");
+include ("../config.php");
 if (function_exists('curl_version')) {
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
