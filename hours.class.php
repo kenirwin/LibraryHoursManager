@@ -244,8 +244,8 @@ class Hours {
     }
     
     public function ExceptionsUpdate($req) {
-        $q = 'UPDATE exceptions SET opentime=?,closetime=?,latenight=?,closed=? WHERE except_id=?';
-        $v = array ($req['opentime'], $req['closetime'],$req['latenight'],$req['closed'],$req['except_id']);
+        $q = 'UPDATE exceptions SET date=?,opentime=?,closetime=?,latenight=?,closed=? WHERE except_id=?';
+        $v = array ($req['date'],$req['opentime'], $req['closetime'],$req['latenight'],$req['closed'],$req['except_id']);
         $stmt = $this->ExecutePrepared($q,$v);
         $jTableResult = array();
         $jTableResult['Result'] = 'OK';
