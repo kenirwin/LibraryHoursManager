@@ -1,4 +1,3 @@
-* reorg so that admin is in a separate folder protected by htaccess -- maybe siblings "info" and "admin"
 * develop testing scenarios (see file: tests)
 * error checking / prevention (see file: tests)
 * what happens after a submission on timeframes.php? show presets picker, etc?
