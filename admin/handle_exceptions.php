@@ -1,5 +1,5 @@
 <?
-require_once('hours.class.php');
+require_once('../hours.class.php');
 $hours = new Hours();
 switch($_REQUEST['action']) {
 case 'list':

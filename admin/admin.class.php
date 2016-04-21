@@ -1,10 +1,10 @@
 <?
 class HoursAdmin {
     private $js_includes = <<<EOT
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="./lib/scripts/flot/excanvas.min.js"></script><![endif]-->
-	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.js"></script>
-	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.time.js"></script>
-	<script language="javascript" type="text/javascript" src="./lib/scripts/flot/jquery.flot.tooltip.min.js"></script>
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../lib/scripts/flot/excanvas.min.js"></script><![endif]-->
+	<script language="javascript" type="text/javascript" src="../lib/scripts/flot/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="../lib/scripts/flot/jquery.flot.time.js"></script>
+	<script language="javascript" type="text/javascript" src="../lib/scripts/flot/jquery.flot.tooltip.min.js"></script>
 EOT;
 
     /* Display functions */

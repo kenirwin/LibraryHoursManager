@@ -3,9 +3,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="lib/scripts/jtable/jquery.jtable.js" type="text/javascript"></script>
-	<link href="lib/scripts/jtable/themes/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="style.css" />
+    <script src="../lib/scripts/jtable/jquery.jtable.js" type="text/javascript"></script>
+	<link href="../lib/scripts/jtable/themes/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
 <? include ("nav.php");  ?>
@@ -81,7 +81,7 @@
 
      <?
      require_once('admin.class.php');
-require_once('hours.class.php');
+require_once('../hours.class.php');
 $hours = new Hours();
 $admin = new HoursAdmin();
 $times = $hours->GetTimeframesAndRanks();
