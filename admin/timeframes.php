@@ -121,14 +121,19 @@ else {
 }
 ?>
 <div id="preset-details"></div>
-<? print $graphJS; ?>
+<?php 
+    if (! in_array('delete_timeframe', $_REQUEST['action'])) {
+        print $graphJS;
+?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
 <div class="flot-container">
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
+<?php
+    }
+?>
 
-
-<? 
+<?php 
     if (sizeof($_REQUEST) > 0) {
         print '<hr>'.PHP_EOL;
         print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
