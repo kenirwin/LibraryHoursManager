@@ -118,12 +118,10 @@ else {
     $exceptions = $hours->getJSON('exceptions');
     $admin->TimeframePicker($times);
     $graphJS = $admin->BuildGraphJS($times,$exceptions);
-}
 ?>
 <div id="preset-details"></div>
 <?php 
-    if (! in_array('delete_timeframe', $_REQUEST['action'])) {
-        print $graphJS;
+    print $graphJS;
 ?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
 <div class="flot-container">
