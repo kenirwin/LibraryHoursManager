@@ -94,7 +94,12 @@ $admin = new HoursAdmin();
 
 if (is_array($_REQUEST['action'])) {
     if (in_array('delete_timeframe',$_REQUEST['action'])) {
-        $hours->DeleteTimeframe($_REQUEST['timeframe_id']);
+        if ($hours->DeleteTimeframe($_REQUEST['timeframe_id'])) {
+            print '<h2>Success: Timeframe deleted</h2>';
+        }
+        else {
+            print '<h2 class="error">Error: Could not delete timeframe</h2>';
+        }
     }
     else {
         $preset_id = '';

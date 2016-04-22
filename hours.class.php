@@ -206,7 +206,13 @@ class Hours {
     public function DeleteTimeframe($id) {
         $q = 'DELETE FROM timeframes WHERE timeframe_id = ?';
         $v = array($id);
-        $this->ExecutePrepared($q,$v);
+        $response = $this->ExecutePrepared($q,$v);
+        if (isset($response->queryString)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // Exceptions / jTables functions
