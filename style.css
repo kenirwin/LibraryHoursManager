@@ -33,6 +33,9 @@ a.delete-button:hover {
     background-color: red;
     color: white;
 }
+.button-wrapper {
+    margin: .5 0;
+}
 #presets-picker {
     margin: .5em 0 1em 0;
 }

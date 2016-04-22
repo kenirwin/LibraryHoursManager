@@ -80,6 +80,15 @@
                        event.stopPropagation();
                    }
                });
+
+               if (! $('.debug').length ) {
+                   $('#toggle-wrapper').hide();
+               }
+               else {
+                   $('#toggle-wrapper').click(function() {
+                       $('.debug').toggle();
+                   });
+               }
            });
 </script>
 </head>
@@ -94,7 +103,12 @@ $admin = new HoursAdmin();
 
 if (is_array($_REQUEST['action'])) {
     if (in_array('delete_timeframe',$_REQUEST['action'])) {
-        $hours->DeleteTimeframe($_REQUEST['timeframe_id']);
+        if ($hours->DeleteTimeframe($_REQUEST['timeframe_id'])) {
+            print '<h2>Success: Timeframe deleted</h2>';
+        }
+        else {
+            print '<h2 class="error">Error: Could not delete timeframe</h2>';
+        }
     }
     else {
         $preset_id = '';
@@ -111,6 +125,7 @@ if (is_array($_REQUEST['action'])) {
             $hours->UpdatePreset(json_encode($_REQUEST));
         }
     }
+    print '<div id="toggle-wrapper" class="button-wrapper"><div id="toggle-debug-button" class="button">Show/Hide Debugging Information</div></div>'.PHP_EOL;
 }
 else { 
     $times = $hours->GetTimeframesAndRanks();
@@ -118,17 +133,20 @@ else {
     $exceptions = $hours->getJSON('exceptions');
     $admin->TimeframePicker($times);
     $graphJS = $admin->BuildGraphJS($times,$exceptions);
-}
 ?>
 <div id="preset-details"></div>
-<? print $graphJS; ?>
+<?php 
+    print $graphJS;
+?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
 <div class="flot-container">
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
+<?php
+    }
+?>
 
-
-<? 
+<?php 
     if (sizeof($_REQUEST) > 0) {
         print '<hr>'.PHP_EOL;
         print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
