@@ -21,7 +21,7 @@ class Hours {
             $stmt->execute($values);
             return $stmt;
         } catch (PDOException $ex) {
-            print $ex->getMessage();
+            print '<div class="debug">'.$ex->getMessage().'</div>';
             return $ex->getMessage();
         }
     }
@@ -118,14 +118,14 @@ class Hours {
         if (isset($req->preset_id) && ($req->preset_id != '' && ($req->preset_id != 'new'))) {
             $q2 = 'update presets SET name=?, rank=? WHERE id=?';
             $v2 = array($req->preset_name, $req->rank, $req->preset_id);
-            print '<li>'.$q2.'</li>';
+            print '<li class="debug">'.$q2.'</li>';
             print_r ($v2);
             print_r($this->ExecutePrepared($q2,$v2));
         }
         else { //if new preset
             $q1 = 'INSERT INTO presets (name,rank) VALUES (?,?)';
             $v1 = array ($req->preset_name,$req->rank);
-            print "<li>$q1</li>";
+            print '<li class="debug">'.$q1.'</li>';
             print_r ($v1);
             $this->ExecutePrepared($q1,$v1);
             $req->preset_id = $this->db->lastInsertId();

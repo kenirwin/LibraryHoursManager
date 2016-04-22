@@ -80,6 +80,15 @@
                        event.stopPropagation();
                    }
                });
+
+               if (! $('.debug').length ) {
+                   $('#toggle-debug-button').hide();
+               }
+               else {
+                   $('#toggle-debug-button').click(function() {
+                       $('.debug').toggle();
+                   });
+               }
            });
 </script>
 </head>
@@ -116,6 +125,7 @@ if (is_array($_REQUEST['action'])) {
             $hours->UpdatePreset(json_encode($_REQUEST));
         }
     }
+    print '<br /><div id="toggle-debug-button" class="button">Show/Hide Debugging Information</div>'.PHP_EOL;
 }
 else { 
     $times = $hours->GetTimeframesAndRanks();
