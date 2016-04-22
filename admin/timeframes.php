@@ -82,10 +82,10 @@
                });
 
                if (! $('.debug').length ) {
-                   $('#toggle-debug-button').hide();
+                   $('#toggle-wrapper').hide();
                }
                else {
-                   $('#toggle-debug-button').click(function() {
+                   $('#toggle-wrapper').click(function() {
                        $('.debug').toggle();
                    });
                }
@@ -125,7 +125,7 @@ if (is_array($_REQUEST['action'])) {
             $hours->UpdatePreset(json_encode($_REQUEST));
         }
     }
-    print '<br /><div id="toggle-debug-button" class="button">Show/Hide Debugging Information</div>'.PHP_EOL;
+    print '<div id="toggle-wrapper" class="button-wrapper"><div id="toggle-debug-button" class="button">Show/Hide Debugging Information</div></div>'.PHP_EOL;
 }
 else { 
     $times = $hours->GetTimeframesAndRanks();
