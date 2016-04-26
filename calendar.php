@@ -4,6 +4,7 @@ if (file_exists("./local_headers.php")) {
 }
 ?>
       <link href="style.css" rel="stylesheet">
+      <link href="local_styles.css" rel="stylesheet">
       <?php
 
       $day_of_week = array('Sun','Mon','Tues','Wed','Thurs','Fri','Sat');
@@ -58,8 +59,9 @@ foreach ($x_cal->day as $x_day) {
 
 $thisfile = basename($_SERVER['PHP_SELF']);
 $calendar = "
+<div id=\"calendar-wrapper\">
 <div align=\"center\">
-<h2 class=\"hours_nav\"><a href=\"" . $thisfile . "?prm=$m&chm=-1\">&#171;</a> &nbsp;&nbsp; $mn $yn &nbsp;&nbsp; <a href=\"" . $thisfile . "?prm=$m&chm=1\">&#187;</a></h2>
+<h2 class=\"hours_nav\"><a href=\"" . $thisfile . "?prm=$m&chm=-1\" class=\"nav_arrow\">&#171;</a> <span class=\"month_header\">$mn $yn</span><a href=\"" . $thisfile . "?prm=$m&chm=1\" class=\"nav_arrow\">&#187;</a></h2>
 </div>
 <br />
 <div align=\"center\">
@@ -124,6 +126,7 @@ for ($i=1;$i<=$no_of_days;$i++) {
 $calendar.= "</tr></tbody></table></div>";
 
 echo $calendar;
+print "</div>"; //id=calendar-wrapper
 ?>
 
 <? 

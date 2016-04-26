@@ -91,6 +91,15 @@ a.delete-button:hover {
 
 
 /* calendar.php */ 
+#calendar-wrapper {
+    width: 40em;
+}
+
+.hours_nav .month_header {
+    width: 10em;
+    display: inline-block;
+}
+
 #hours { 
   width: 100%; 
   border-collapse: collapse;
