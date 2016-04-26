@@ -35,7 +35,7 @@ You can also generate the XML file on the command line and capture the output us
 
 You can copy the **GetXML-sample.sh** to **GetXML.sh** and uncomment a method that works well for you to make command-line generation of the hours easier.
 
-Use the `calendar.php` file to read the resulting static *hours.xml* file.
+Use the `calendar.php` file to read the resulting static `hours.xml` file.
 
 
 ## Database Tables
@@ -50,7 +50,7 @@ There are four tables:
 ## Credits
 
 * Front-end (calendar.php, style.css) by Andrew Darby and Ron Gilmour at Ithaca College; based in part on Andrew Darby's 'Code4Lib Journal' article on "Using Google Calendar to Manage Library Website Hours": http://journal.code4lib.org/articles/46 
-* Back-end database structure and PHP to generate XML (genereate.php, hours.class.php, etc) by Ken Irwin at Wittenberg University
+* Back-end database structure and PHP to generate XML (generate.php, hours.class.php, etc.) by Ken Irwin at Wittenberg University
 * the Manage Exceptions function uses the jTable plugin developed by Halil Ibrahim Kalkan and licensed under [MIT License] (http://opensource.org/licenses/MIT).
 
 ## License
