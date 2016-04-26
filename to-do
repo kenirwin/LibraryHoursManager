@@ -4,6 +4,10 @@
 * more consistent visuals
 * delete mechanism for preset
 * add tooltip to flot dates
+* Grunt/Bower/Node.js hopes: 
+  * manage dependencies (jq, jqui, jtable, flot)
+  * unit tests (see file: tests)
+  * pre-render README.md -> README.html (instead of realtime call to md parser)
 
 BUGS:
 * does a slash, hyphen, or other funny character in a timeframe break the flot? (it seemed to on 'Good Friday / Easter Holiday' 
