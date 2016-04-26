@@ -6,3 +6,4 @@ local_footers.php
 getXML.sh
 hours.xml
 .htaccess
+local_styles.css
