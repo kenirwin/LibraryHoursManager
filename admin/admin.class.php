@@ -25,17 +25,17 @@ EOT;
 
     public function EditTimeframeDetails ($json,$hours,$id) {
         if (isset($json)) { $details = json_decode($json); }
-        //        print '<pre>';print_r($details); print '</pre>'; print '<hr>'.PHP_EOL;
+        // print '<pre>';print_r($details); print '</pre>'; print '<hr>'.PHP_EOL;
         $table  = '<div id="edit-timeframe">'.PHP_EOL;
         $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="timeframes.php">'.PHP_EOL;
-        $table .= $this->FormRow('preset_id', $details[0]->preset_id, 'hidden');
+        $table .= $this->FormRow('preset_id', $details[0]->apply_preset_id, 'hidden');
         $table .= $this->FormRow('timeframe_id', $details[0]->timeframe_id, 'hidden');
         $table .= $this->FormRow('name', $details[0]->name, 'text');
         $table .= $this->FormRow('first_date', $details[0]->first_date, 'text');
         $table .= $this->FormRow('last_date', $details[0]->last_date, 'text');
         //        $table .= $this->RankPulldown($details[0]->rank);
-        $table .= $this->SettingsSelectorPulldown($hours, $id);
+        $table .= $this->SettingsSelectorPulldown($hours, $details[0]->apply_preset_id);
         $table .= $this->FormRow('action[]','submit_timeframe_details','hidden');
         $table .= '<div id="settings-placeholder"></div>'.PHP_EOL;
         $table .= '<input type="submit">'.PHP_EOL;
@@ -84,12 +84,13 @@ EOT;
     }
 
     private function SettingsSelectorPulldown($hours,$id='') {
+        //        print "<h3>ID: $id</h3>";
         $presets = json_decode($hours->GetJSON('presets'));
         $pulldown  = 'use preset settings: <select name="use_preset">'.PHP_EOL;
         $pulldown .= ' <option>Select one</option>'.PHP_EOL;
         $pulldown .= ' <option value="new">Create New Preset</option>'.PHP_EOL;
         foreach ($presets as $p) {
-            //            print $p->id . ' ==? ' .$id.'<br>'.PHP_EOL;
+            // print $p->id . ' ==? ' .$id.'<br>'.PHP_EOL;
             if ($p->rank == 1) { $rank_desc = "General Time Period"; }
             elseif($p->rank==2) { $rank_desc = "Special Time Period"; }
             if ($p->id == $id) { $selected = ' selected'; }
