@@ -24,10 +24,15 @@
              $('input[name="first_date"]').datepicker({
                      dateFormat: "yy-mm-dd",
                                           //                     onSelect: function (date) { SetLastDate(date); }
-                                          }).after('<span class="button plus-one" data-field="first_date">+1 Year</span>');
+                                          }).after('<span class="button minus-one" data-field="first_date">-1 Year</span>');
 
              $('.plus-one').click(function() {
-                 PlusOneYear($(this).data('field'));
+                 ChangeOneYear('first_date','plus');
+                 ChangeOneYear('last_date','plus');
+             });
+             $('.minus-one').click(function() {
+                 ChangeOneYear('first_date','minus');
+                 ChangeOneYear('last_date','minus');
              });
          });
          function SetLastDate(date) { 
@@ -35,8 +40,15 @@
          }
      }
      
-     function PlusOneYear(field) {
-         alert ('Plus One:'+field);
+     function ChangeOneYear(fieldName,direction) {
+         if (direction == 'plus') { increment = 1; }
+         if (direction == 'minus') { increment = -1; } 
+         var field = $('input[name='+fieldName+']');
+         var value = $(field).val();
+         var newDate = new Date(value);
+         newDate.setFullYear(newDate.getFullYear() + increment);
+         newDateStr = newDate.getFullYear() +'-'+ newDate.getMonth() +'-'+ newDate.getDate();
+         $(field).val(newDateStr);
      }
 
      function BindSettingsFields() {
