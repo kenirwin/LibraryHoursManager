@@ -20,17 +20,25 @@
                   }
                   });
              });
-             $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"});
+             $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"}).after('<span class="button plus-one" data-field="last_date">+1 Year</span>');
              $('input[name="first_date"]').datepicker({
                      dateFormat: "yy-mm-dd",
                                           //                     onSelect: function (date) { SetLastDate(date); }
-                 });
+                                          }).after('<span class="button plus-one" data-field="first_date">+1 Year</span>');
+
+             $('.plus-one').click(function() {
+                 PlusOneYear($(this).data('field'));
+             });
          });
          function SetLastDate(date) { 
              $('input[name="last_date"]').datepicker("destroy").datepicker({defaultDate: date});
          }
      }
      
+     function PlusOneYear(field) {
+         alert ('Plus One:'+field);
+     }
+
      function BindSettingsFields() {
          $(function() {
              $('#edit-settings-button').click(function() {
