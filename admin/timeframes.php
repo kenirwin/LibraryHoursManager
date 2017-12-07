@@ -23,7 +23,7 @@
              $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"});
              $('input[name="first_date"]').datepicker({
                      dateFormat: "yy-mm-dd",
-                     onSelect: function (date) { SetLastDate(date); }
+                                          //                     onSelect: function (date) { SetLastDate(date); }
                  });
          });
          function SetLastDate(date) { 
