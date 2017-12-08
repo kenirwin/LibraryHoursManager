@@ -20,17 +20,17 @@
                   }
                   });
              });
-             $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"}).after('<span class="button plus-one" data-field="last_date">+1 Year</span>');
+             $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"});
              $('input[name="first_date"]').datepicker({
                      dateFormat: "yy-mm-dd",
                                           //                     onSelect: function (date) { SetLastDate(date); }
-                                          }).after('<span class="button minus-one" data-field="first_date">-1 Year</span>');
+                                          });
 
-             $('.plus-one').click(function() {
+             $('#plus-one-year').click(function() {
                  ChangeOneYear('first_date','plus');
                  ChangeOneYear('last_date','plus');
              });
-             $('.minus-one').click(function() {
+             $('#minus-one-year').click(function() {
                  ChangeOneYear('first_date','minus');
                  ChangeOneYear('last_date','minus');
              });
