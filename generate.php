@@ -27,7 +27,7 @@ case "oneday":
     print ($libHours->GetHoursByDate($date,$format));
     break;
 default: 
-    include ("gen_form.php");
+    include ("admin/gen_form.php");
     break;
 }
 
