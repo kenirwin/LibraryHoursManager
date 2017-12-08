@@ -8,6 +8,8 @@
    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
+<div id="wrapper">
+<div id="content">
 <? include ("nav.php");  ?>
 
 	<div id="ExceptionsTableContainer" style="width: 700px;"></div>
@@ -93,6 +95,13 @@ print $graphJS;
 <div class="flot-container">
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
+
+
+</div><!--id=content-->
+<div id="footer">
+<?php include('../license.php'); ?>
+</div><!--id=footer>
+</div><!--id=wrapper-->
 
   </body>
 </html>

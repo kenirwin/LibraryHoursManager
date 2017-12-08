@@ -113,6 +113,8 @@
 </script>
 </head>
 <body id="edit">
+<div id="wrapper">
+<div id="content">
 <?
 include ("../hours.class.php");
 include ("admin.class.php");
@@ -172,4 +174,9 @@ else {
         print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
     }
 ?>
+</div><!--id=content-->
+<div id="footer">
+<?php include('../license.php'); ?>
+</div><!--id=footer>
+</div><!--id=wrapper-->
 </body>
