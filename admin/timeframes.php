@@ -1,8 +1,8 @@
 <html>
 <head>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<script src="../lib/scripts/jquery-2.2.3.min.js
-"></script>
+<script src="../lib/scripts/jquery-2.2.3.min.js"></script>
+<script src="../lib/scripts/moment.js"></script>
 <link rel="stylesheet" href="../style.css" />
 
     <link href="../lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
@@ -45,10 +45,9 @@
          if (direction == 'minus') { increment = -1; } 
          var field = $('input[name='+fieldName+']');
          var value = $(field).val();
-         var newDate = new Date(value);
-         newDate.setFullYear(newDate.getFullYear() + increment);
-         newDateStr = newDate.getFullYear() +'-'+ newDate.getMonth() +'-'+ newDate.getDate();
-         $(field).val(newDateStr);
+         var format = 'YYYY-MM-DD';
+         var newDate = moment(value, format).add(increment, 'year').format(format);
+         $(field).val(newDate);
      }
 
      function BindSettingsFields() {
