@@ -1,7 +1,7 @@
 <?
 include ("hours.class.php");
 
-if (is_array($argv)) { Argv2Request($argv); }
+if (isset($argv) && is_array($argv)) { Argv2Request($argv); }
 if (isset($_REQUEST['format'])) {
     $format = $_REQUEST['format'];
 }
@@ -20,7 +20,7 @@ case "getlist":
     print ($libHours->ListDailyHours($format,$_REQUEST));
     break;
 case "oneday":
-    if ($_REQUEST['date']) { 
+    if (isset($_REQUEST['date'])) { 
         $date = date("Y-m-d",strtotime($_REQUEST['date']));
     }
     else { $date = date("Y-m-d"); }
