@@ -1,3 +1,3 @@
 <?php
-$hoursmanager_version = "0.2.2a";
+$hoursmanager_version = "0.2.2";
 ?>
