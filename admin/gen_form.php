@@ -26,7 +26,7 @@ else {
      });
 </script>
 <body>
-<?
+<?php
 if ($display_nav) {
     print '<div id="wrapper">'.PHP_EOL;
     print '<div id="content">'.PHP_EOL;
@@ -55,7 +55,7 @@ if ($display_nav) {
      <input type="text" name="date" class="date-field" />
      <input type="submit" />
      </form>
-<?
+<?php
     if ($display_nav) {
         print '</div><!--id=content-->'.PHP_EOL;
         print '<div id="footer">'.PHP_EOL;

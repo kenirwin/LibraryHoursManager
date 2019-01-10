@@ -1,4 +1,4 @@
-<?
+<?php
 if (file_exists("./local_headers.php")) {
     include ("local_headers.php");
 }
@@ -129,7 +129,7 @@ echo $calendar;
 print "</div>"; //id=calendar-wrapper
 ?>
 
-<? 
+<?php 
 if (file_exists("./local_footers.php")) {
     include ("./local_footers.php"); 
 }

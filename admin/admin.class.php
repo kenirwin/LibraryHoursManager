@@ -1,4 +1,4 @@
-<?
+<?php
 class HoursAdmin {
     private $js_includes = <<<EOT
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../lib/scripts/flot/excanvas.min.js"></script><![endif]-->

@@ -1,4 +1,4 @@
-<?
+<?php
 include ("hours.class.php");
 
 if (is_array($argv)) { Argv2Request($argv); }

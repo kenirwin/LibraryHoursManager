@@ -36,7 +36,7 @@ print (RenderMarkdown($file));
 </body>
 </html>
 
-<?
+<?php
 function PostJSON ($url, $json) {
 include ("../config.php");
 if (function_exists('curl_version')) {

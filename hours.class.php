@@ -1,4 +1,4 @@
-<?
+<?php
 class Hours {
     private $db;
     private $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
