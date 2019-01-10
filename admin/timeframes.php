@@ -115,7 +115,7 @@
 <body id="edit">
 <div id="wrapper">
 <div id="content">
-<?
+<?php
 include ("../hours.class.php");
 include ("admin.class.php");
 include ("nav.php");
@@ -165,7 +165,7 @@ else {
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
 <?php
-    }
+}
 ?>
 
 <?php 
