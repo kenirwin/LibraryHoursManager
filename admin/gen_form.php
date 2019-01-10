@@ -49,7 +49,7 @@ if ($display_nav) {
 
      <h2>Get One Day as Plain Text</h2>
      <p><a href="<?=$path;?>/generate.php?action=oneday" class="button">Today</a> -- suitable for including on another page via curl or php include</p>
-     <form action="../generate.php">
+     <form action="<?=$path;?>/generate.php">
      <input type="hidden" name="action" value="oneday" />
      <label for="date">Choose date:</label>
      <input type="text" name="date" class="date-field" />
