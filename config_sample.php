@@ -1,4 +1,4 @@
-<?
+<?php
 $username = "";
 $database = "";
 $hostname = "";

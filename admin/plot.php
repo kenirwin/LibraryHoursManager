@@ -1,4 +1,4 @@
-<?
+<?php
 include ("../hours.class.php");
 include ("admin.class.php");
 
@@ -13,7 +13,7 @@ $graphJS = $admin->BuildGraphJS($times,$exceptions);
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Flot Examples: Time Axes</title>
-                              <? print_r ($graphJS); ?>
+                              <?php print_r ($graphJS); ?>
 
 </head>
 <body>

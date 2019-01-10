@@ -3,12 +3,14 @@
    <script src="../lib/scripts/jquery-2.2.3.min.js"></script>
    <link href="../lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
    <script src="../lib/scripts/jquery-ui.1.11.4.min.js"></script>
-   <script src="../lib/scripts/jtable/jquery.jtable.js" type="text/javascript"></script>
-   <link href="../lib/scripts/jtable/themes/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
+   <script src="../lib/scripts/jtable-2.4/jquery.jtable.js" type="text/javascript"></script>
+   <link href="../lib/scripts/jtable-2.4/themes/lightcolor/blue/jtable.css" rel="stylesheet" type="text/css" />
    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
-<? include ("nav.php");  ?>
+<div id="wrapper">
+<div id="content">
+<?php include ("nav.php");  ?>
 
 	<div id="ExceptionsTableContainer" style="width: 700px;"></div>
 	<script type="text/javascript">
@@ -79,7 +81,7 @@
 
 <div id="DeleteSelectedButton">Delete Selected Rows</div>
 
-     <?
+     <?php
      require_once('admin.class.php');
 require_once('../hours.class.php');
 $hours = new Hours();
@@ -87,12 +89,21 @@ $admin = new HoursAdmin();
 $times = $hours->GetTimeframesAndRanks();
 $exceptions = $hours->getJSON('exceptions');
 $graphJS = $admin->BuildGraphJS($times,$exceptions);
+print '<!--begin graphJS-->'.PHP_EOL;
 print $graphJS;
+print '<!--end graphJS-->'.PHP_EOL;
 ?>
 <h2 style="text-align:center">Timeline of Date Settings by Rank</h2>
 <div class="flot-container">
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
+
+
+</div><!--id=content-->
+<div id="footer">
+<?php include('../license.php'); ?>
+</div><!--id=footer>
+</div><!--id=wrapper-->
 
   </body>
 </html>

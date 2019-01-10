@@ -52,6 +52,7 @@ There are four tables:
 * Front-end (calendar.php, style.css) by Andrew Darby and Ron Gilmour at Ithaca College; based in part on Andrew Darby's 'Code4Lib Journal' article on "Using Google Calendar to Manage Library Website Hours": http://journal.code4lib.org/articles/46 
 * Back-end database structure and PHP to generate XML (generate.php, hours.class.php, etc.) by Ken Irwin at Wittenberg University
 * the Manage Exceptions function uses the jTable plugin developed by Halil Ibrahim Kalkan and licensed under [MIT License] (http://opensource.org/licenses/MIT).
+* the Timeframes functionality uses the Moment.js plugin [MIT License] (http://momentjs.com)
 
 ## License
 

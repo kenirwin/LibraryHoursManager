@@ -1,4 +1,4 @@
-<?
+<?php
 include ('../hours.class.php');
 include ('admin.class.php');
 $hours = new Hours;

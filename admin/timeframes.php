@@ -1,8 +1,8 @@
 <html>
 <head>
 <meta name=viewport content="width=device-width, initial-scale=1">
-<script src="../lib/scripts/jquery-2.2.3.min.js
-"></script>
+<script src="../lib/scripts/jquery-2.2.3.min.js"></script>
+<script src="../lib/scripts/moment.js"></script>
 <link rel="stylesheet" href="../style.css" />
 
     <link href="../lib/themes/redmond/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
@@ -23,14 +23,33 @@
              $('input[name="last_date"]').datepicker({dateFormat: "yy-mm-dd"});
              $('input[name="first_date"]').datepicker({
                      dateFormat: "yy-mm-dd",
-                     onSelect: function (date) { SetLastDate(date); }
-                 });
+                                          //                     onSelect: function (date) { SetLastDate(date); }
+                                          });
+
+             $('#plus-one-year').click(function() {
+                 ChangeOneYear('first_date','plus');
+                 ChangeOneYear('last_date','plus');
+             });
+             $('#minus-one-year').click(function() {
+                 ChangeOneYear('first_date','minus');
+                 ChangeOneYear('last_date','minus');
+             });
          });
          function SetLastDate(date) { 
              $('input[name="last_date"]').datepicker("destroy").datepicker({defaultDate: date});
          }
      }
      
+     function ChangeOneYear(fieldName,direction) {
+         if (direction == 'plus') { increment = 1; }
+         if (direction == 'minus') { increment = -1; } 
+         var field = $('input[name='+fieldName+']');
+         var value = $(field).val();
+         var format = 'YYYY-MM-DD';
+         var newDate = moment(value, format).add(increment, 'year').format(format);
+         $(field).val(newDate);
+     }
+
      function BindSettingsFields() {
          $(function() {
              $('#edit-settings-button').click(function() {
@@ -94,7 +113,9 @@
 </script>
 </head>
 <body id="edit">
-<?
+<div id="wrapper">
+<div id="content">
+<?php
 include ("../hours.class.php");
 include ("admin.class.php");
 include ("nav.php");
@@ -144,7 +165,7 @@ else {
 	<div id="placeholder" class="flot-placeholder"></div>
 </div>
 <?php
-    }
+}
 ?>
 
 <?php 
@@ -153,4 +174,9 @@ else {
         print '<a href="'.$_SERVER['SCRIPT_NAME'].'">Clear</a>'.PHP_EOL;
     }
 ?>
+</div><!--id=content-->
+<div id="footer">
+<?php include('../license.php'); ?>
+</div><!--id=footer>
+</div><!--id=wrapper-->
 </body>

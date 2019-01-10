@@ -1,4 +1,4 @@
-<?
+<?php
 include_once ("../config.php");
 try { 
     $db = new PDO("mysql:host=$hostname;dbname=$database;charset=$charset", "$username", "$password");

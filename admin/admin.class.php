@@ -1,4 +1,4 @@
-<?
+<?php
 class HoursAdmin {
     private $js_includes = <<<EOT
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../lib/scripts/flot/excanvas.min.js"></script><![endif]-->
@@ -29,6 +29,8 @@ EOT;
         $table  = '<div id="edit-timeframe">'.PHP_EOL;
         $table .= '<h2>Timeframe Details</h2>'.PHP_EOL;
         $table .= '<form id="presets-editor" action="timeframes.php">'.PHP_EOL;
+        $table .= '<p><span class="button" id="plus-one-year">+1 Year</span>'.PHP_EOL;
+        $table .= '<span class="button" id="minus-one-year">-1 Year</span></p>'.PHP_EOL;
         $table .= $this->FormRow('preset_id', $details[0]->apply_preset_id, 'hidden');
         $table .= $this->FormRow('timeframe_id', $details[0]->timeframe_id, 'hidden');
         $table .= $this->FormRow('name', $details[0]->name, 'text');

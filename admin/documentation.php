@@ -16,7 +16,8 @@
 </head>
 
 <body>
-
+<div id="wrapper">
+<div id="content">
 <?php
      include ("nav.php");
 $file =  file_get_contents("../README.md");
@@ -25,10 +26,17 @@ $lines = explode("\n", $file);
 //$file = implode("\n", array_slice($lines, 2));
 print (RenderMarkdown($file));
 ?>
+</div><!--id=content-->
+<div id="footer">
+<?php include('../license.php'); ?>
+</div><!--id=footer>
+</div><!--id=wrapper-->
+
+
 </body>
 </html>
 
-<?
+<?php
 function PostJSON ($url, $json) {
 include ("../config.php");
 if (function_exists('curl_version')) {

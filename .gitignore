@@ -3,7 +3,7 @@
 config.php
 local_headers.php
 local_footers.php
+local_styles.css
 getXML.sh
 hours.xml
 .htaccess
-local_styles.css

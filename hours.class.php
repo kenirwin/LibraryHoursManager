@@ -1,4 +1,4 @@
-<?
+<?php
 class Hours {
     private $db;
     private $days = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
@@ -13,7 +13,7 @@ class Hours {
         }
     }
     
-    private function ExecutePrepared($query,$values) {
+    private function ExecutePrepared($query,$values=[]) {
         try {
             //            print ($query);
             //print_r ($values);
