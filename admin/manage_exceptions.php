@@ -10,7 +10,7 @@
   <body>
 <div id="wrapper">
 <div id="content">
-<?php include ("nav.php");  ?>
+<? include ("nav.php");  ?>
 
 	<div id="ExceptionsTableContainer" style="width: 700px;"></div>
 	<script type="text/javascript">
@@ -81,7 +81,7 @@
 
 <div id="DeleteSelectedButton">Delete Selected Rows</div>
 
-     <?php
+     <?
      require_once('admin.class.php');
 require_once('../hours.class.php');
 $hours = new Hours();

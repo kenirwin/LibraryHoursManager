@@ -13,7 +13,7 @@ class Hours {
         }
     }
     
-    private function ExecutePrepared($query,$values) {
+    private function ExecutePrepared($query,$values=[]) {
         try {
             //            print ($query);
             //print_r ($values);
