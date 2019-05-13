@@ -7,3 +7,4 @@ local_styles.css
 getXML.sh
 hours.xml
 .htaccess
+*.json
