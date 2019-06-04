@@ -52,20 +52,40 @@ class Hours {
     }
     
     public function GetHoursByDate ($date, $format="text") {
+        $google_info = array('date' => $date, 'info_type'=>'special');
         $q = "SELECT * FROM exceptions WHERE `date` = ?";
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($date));
         if ($stmt->rowCount() == 1) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($row['closed'] == "Y") {
-                $hours = "CLOSED";
+                if ($format == 'google') {
+                    $google_info['is_closed'] = true;
+                    return $google_info;
+                }
+                else {
+                    $hours = "CLOSED";
+                }
             }
             else {
                 $hours = $row['opentime'] .' - '. $row['closetime'];
+                $google_info['is_closed'] = false;
+                $google_info['opentime'] = $row['opentime'];
+                $google_info['openday'] = $date;
+                $google_info['closetime'] = $row['closetime'];
+                if ($row['latenight'] == 'Y') {
+                    $google_info['closeday'] = date('Y-m-d',strtotime($date.' +1 day'));
+                }
+                else { $google_info['closeday'] = $date; }
             }
         }
         else {
-            $hours = $this->GetHoursFromTimeframe($date);
+            if ($format == 'google') {
+                $google_info =  $this->GetHoursFromTimeframe($date,$format);
+            }
+            else { 
+                $hours = $this->GetHoursFromTimeframe($date,$format);
+            }
         }
         if ($format == "text") { 
             return $hours;
@@ -73,22 +93,50 @@ class Hours {
         elseif ($format == "xmlIthaca") {
             return '<day date="'.$date.'">'.$hours.'</day>'.PHP_EOL;
         }
+        elseif ($format == 'google') {
+            return $google_info;
+        }
     }
     
-    public function GetHoursFromTimeframe($date) {
+    public function GetHoursFromTimeframe($date, $format) {
+        $google_info = array('date'=>$date);
         $day_of_week = date("l", strtotime($date));
-        $q = "SELECT settings.* FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
+        $q = "SELECT settings.*,rank FROM settings,timeframes,presets WHERE timeframes.first_date <= ? and timeframes.last_date >= ? and apply_preset_id = preset_id and preset_id = presets.id and settings.day = ? ORDER BY presets.rank DESC LIMIT 0,1";
         
         $stmt = $this->db->prepare($q);
         $stmt->execute(array($date,$date,$day_of_week));
-        
+
         if ($stmt->rowCount() == 1) {
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['rank'] == 2) { 
+                    $google_info['info_type'] = 'special';
+                }
+                elseif ($row['rank'] == 1) {
+                    $google_info['info_type'] = 'regular';
+                }
                 if ($row['closed'] == "Y") {
-                    return "CLOSED";
+                    if ($format == 'google') {
+                        $google_info['is_closed'] = true;
+                        return $google_info;
+                    }
+                    else {
+                        return "CLOSED";
+                    }
                 }
                 else {
-                    return $row['opentime'] . ' - '. $row['closetime'];
+                    if ($format == 'google') {
+                        $google_info['opentime'] = $row['opentime'];
+                        $google_info['openday'] = $date;
+                        $google_info['closetime'] = $row['closetime'];
+                        if ($row['latenight'] == 'Y') {
+                            $google_info['closeday'] = date('Y-m-d',strtotime($date . ' + 1 day'));
+                        }
+                        else { $google_info['closeday'] = $date; }
+                        return $google_info;
+                    }
+                    else { 
+                        return $row['opentime'] . ' - '. $row['closetime'];
+                    }
                 }
             }
         }
