@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-header('Content-type: text/plain');
+//header('Content-type: text/plain');
 
 require_once './vendor/autoload.php';
 require_once 'config.php';
@@ -17,8 +17,11 @@ include ("hours.class.php");
 $hours = new Hours;
 $start_date = date('Y-m-d');
 $end_date = AddDays($start_date,7);
+$special_start_date = AddDays($end_date,1);
+$special_end_date = AddDays($start_date,120); // four months ahead for special date inclusion
 
 $dates = $hours->ListDatesInRange($start_date,$end_date);
+$special_dates = $hours->ListDatesInRange($special_start_date,$special_end_date);
 
 $distinct_timeframes = $hours->CountTimeframesInSpan($start_date,$end_date);
 if ($distinct_timeframes == 1) {
@@ -42,6 +45,12 @@ foreach ($dates as $date) {
     }    
 }
 
+foreach ($special_dates as $date) {
+    $oneday = $hours->getHoursByDate($date,'google');
+    if ($oneday['info_type'] != 'regular') {
+        array_push($special_hours,$oneday);
+    }
+}
 /* Connect to Google */
 
 try { 
@@ -52,7 +61,7 @@ try {
     $mybiz = new Google_Service_MyBusiness($client);
     $account = $mybiz->accounts->get(G_MYBIZ_ACCOUNT);
     $location = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0];
-    //    var_dump($location);
+    //print_r($location->specialHours);
 } catch (Exception $e) {
     print ('Trouble connecting to Google: ' . $e->getMessage());
 }
@@ -71,7 +80,35 @@ try {
     }
     $reg_hours->setPeriods($periods);
     $location->setRegularHours($reg_hours); 
+
+
+    /* now update special hours */
+    $special_periods = array();
+    foreach ($special_hours as $special_day) {
+        //        print_r($special_day);
+        $periodDay = new Google_Service_MyBusiness_Date;
+        $periodDay->setYear(date('Y',strtotime($special_day['date']))); 
+        $periodDay->setMonth(date('m',strtotime($special_day['date']))); 
+        $periodDay->setDay(date('d',strtotime($special_day['date']))); 
+        $period = new Google_Service_MyBusiness_SpecialHourPeriod;
+        $period->setStartDate($periodDay);
+        $period->setEndDate($periodDay);
+        if (array_key_exists('is_closed',$special_day) && ($special_day['is_closed'])) {
+            $period->setIsClosed(true);
+        }
+        else {
+            //            $period->setOpenDay($special_day['openday']);
+            $period->setOpenTime($special_day['opentime']);
+            //$period->setCloseDay($special_day['closeday']);
+            $period->setCloseTime($special_day['closetime']);
+            $period->setIsClosed(false);
+        }
+        array_push($special_periods, $period);
+    }
+
+
     //    $response = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0]->setRegularHours($reg_hours);
+
     print 'Update response from Google: ';
     print($response);
 } catch (Exception $e) {
