@@ -61,7 +61,8 @@ try {
     $mybiz = new Google_Service_MyBusiness($client);
     $account = $mybiz->accounts->get(G_MYBIZ_ACCOUNT);
     $location = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0];
-    //print_r($location->specialHours);
+    $before = print_r($location,true);
+    print '<hr>';
 } catch (Exception $e) {
     print ('Trouble connecting to Google: ' . $e->getMessage());
 }
@@ -80,9 +81,10 @@ try {
     }
     $reg_hours->setPeriods($periods);
     $location->setRegularHours($reg_hours); 
-
-
+    
+    //    print_r($location);
     /* now update special hours */
+    $special_hours = new Google_Service_MyBusiness_SpecialHours;
     $special_periods = array();
     foreach ($special_hours as $special_day) {
         //        print_r($special_day);
@@ -106,13 +108,24 @@ try {
         array_push($special_periods, $period);
     }
 
+    $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0]->setRegularHours($reg_hours);
+    $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0]->setSpecialHours($special_hours);
 
-    //    $response = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0]->setRegularHours($reg_hours);
-
-    print 'Update response from Google: ';
-    print($response);
+    $after = print_r($mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0],true);
 } catch (Exception $e) {
-    print 'Trouble updating Google: '.$e->getMessage();
+    print 'Trouble updating Google model: '.$e->getMessage();
+}
+
+try {
+    $opts = array();
+    $opts = array('validateOnly'=>true);
+    $response = $mybiz->accounts_locations->patch($location->name, $location, $opts);
+    if (isset($response)) {
+        print 'Update response from Google: ';
+        print_r($response);
+    }
+} catch (Exception $e) {
+    print $e->getMessage();
 }
 
 

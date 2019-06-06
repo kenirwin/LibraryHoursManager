@@ -93,9 +93,9 @@ class Hours {
             else {
                 $hours = $row['opentime'] .' - '. $row['closetime'];
                 $google_info['is_closed'] = false;
-                $google_info['opentime'] = $row['opentime'];
+                $google_info['opentime'] = date('H:i', strtotime( $row['opentime']));
                 $google_info['openday'] = $date;
-                $google_info['closetime'] = $row['closetime'];
+                $google_info['closetime'] = date('H:i', strtotime($row['closetime']));
                 if ($row['latenight'] == 'Y') {
                     $google_info['closeday'] = date('Y-m-d',strtotime($date.' +1 day'));
                 }
@@ -148,9 +148,9 @@ class Hours {
                 }
                 else {
                     if ($format == 'google') {
-                        $google_info['opentime'] = $row['opentime'];
+                        $google_info['opentime'] = date('H:i', strtotime($row['opentime']));
                         $google_info['openday'] = $date;
-                        $google_info['closetime'] = $row['closetime'];
+                        $google_info['closetime'] = date('H:i', strtotime($row['closetime']));
                         if ($row['latenight'] == 'Y') {
                             $google_info['closeday'] = date('Y-m-d',strtotime($date . ' + 1 day'));
                         }
@@ -207,8 +207,8 @@ class Hours {
         $info = array();
         foreach ($rows as $row) {
             $day = $row['day'];
-            $info[$day]['opentime'] = $row['opentime'];
-            $info[$day]['closetime'] = $row['closetime'];
+            $info[$day]['opentime'] = date('H:i', strtotime($row['opentime']));
+            $info[$day]['closetime'] = date('H:i', strtotime($row['closetime']));
             $info[$day]['openday'] = $day;
             if ($row['latenight'] == 'Y') {
                 $info[$day]['closeday'] = $this->nextDayOfWeek($day);
