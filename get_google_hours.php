@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-//header('Content-type: text/plain');
+header('Content-type: text/plain');
 
 require_once './vendor/autoload.php';
 require_once 'config.php';
@@ -52,13 +52,32 @@ try {
     $mybiz = new Google_Service_MyBusiness($client);
     $account = $mybiz->accounts->get(G_MYBIZ_ACCOUNT);
     $location = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0];
-    var_dump($location);
+    //    var_dump($location);
 } catch (Exception $e) {
     print ('Trouble connecting to Google: ' . $e->getMessage());
 }
 
+try { 
+    /* do regular hours */
+    $reg_hours = new Google_Service_MyBusiness_BusinessHours;
+    $periods = array();
+    foreach ($hours->Days() as $day) {
+        $period = new Google_Service_MyBusiness_TimePeriod;
+        $period->setOpenDay($reg[$day]['openday']);
+        $period->setOpenTime($reg[$day]['opentime']);
+        $period->setCloseDay($reg[$day]['closeday']);
+        $period->setCloseTime($reg[$day]['closetime']);
+        array_push($periods, $period);
+    }
+    $reg_hours->setPeriods($periods);
+    $location->setRegularHours($reg_hours); 
+    //    $response = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0]->setRegularHours($reg_hours);
+    print 'Update response from Google: ';
+    print($response);
+} catch (Exception $e) {
+    print 'Trouble updating Google: '.$e->getMessage();
+}
 
-// NOW: just gotta actually use google client
 
 function AddDays($start_date, $days) {
     return date('Y-m-d', strtotime($start_date . ' + '.$days.' days'));
