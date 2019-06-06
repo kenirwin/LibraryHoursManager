@@ -13,6 +13,9 @@ class Hours {
         }
     }
     
+    public function Days() {
+        return $this->days;
+    }
     private function ExecutePrepared($query,$values=[]) {
         try {
             //            print ($query);
