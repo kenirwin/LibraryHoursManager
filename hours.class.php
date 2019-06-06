@@ -6,7 +6,7 @@ class Hours {
     public function __construct() {
         include_once ("config.php");
         try { 
-            $this->db = new PDO("mysql:host=$hostname;dbname=$database;charset=$charset", "$username", "$password");
+            $this->db = new PDO("mysql:host=".HOSTNAME.";dbname=".DATABASE.";charset=".CHARSET, USER, PASS);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $ex) {
             echo $ex->getMessage();
@@ -24,6 +24,26 @@ class Hours {
             print '<div class="debug">'.$ex->getMessage().'</div>';
             return $ex->getMessage();
         }
+    }
+
+    public function ListDatesInRange($start,$end) {
+        $dates = array();
+        $next = $start;
+        $finished = false;
+        while (! $finished) {
+            array_push($dates, $next);
+            if ($next == $end) {
+                $finished = true;
+            }
+            else { 
+                $next = $this->NextDate($next);
+            }
+        }
+        return $dates;
+    }
+
+    private function NextDate($date) {
+        return (date('Y-m-d', strtotime("$date + 1 day")));
     }
 
     public function ListDailyHours ($format,$req) {
@@ -158,7 +178,46 @@ class Hours {
         }
     } 
     
+    public function CountTimeframesInSpan($first,$last) {
+        $q = "SELECT * FROM  `timeframes` , `presets` WHERE `presets`.`rank` = 1 AND `timeframes`.`apply_preset_id` = `presets`.`id` and `first_date` < ? and `last_date` > ? ";
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($last,$first));
+        $count = $stmt->rowCount();
+        if ($count == 1) { 
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->preset_id = $row['apply_preset_id'];
+        }
+        return $stmt->rowCount();
+    }
 
+    public function GetCurrentRegularHours() {
+        //return for google
+        $q = "SELECT * FROM `settings` WHERE `preset_id` = ?";
+        $stmt = $this->db->prepare($q);
+        $stmt->execute(array($this->preset_id));
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $google_info = $this->GooglizeRows($rows);
+        return $google_info;
+    }
+
+    private function GooglizeRows($rows) {
+        $info = array();
+        foreach ($rows as $row) {
+            $day = $row['day'];
+            $info[$day]['opentime'] = $row['opentime'];
+            $info[$day]['closetime'] = $row['closetime'];
+            $info[$day]['openday'] = $day;
+            if ($row['latenight'] == 'Y') {
+                $info[$day]['closeday'] = $this->nextDayOfWeek($day);
+            }
+            else { $info[$day]['closeday'] = $day; }
+        }
+        return $info;
+    }
+
+    private function nextDayOfWeek($day) {
+        return date('l', strtotime("$day + 1 day"));
+    }
     // Insert & Update functions
 
     public function UpdatePreset($req) {

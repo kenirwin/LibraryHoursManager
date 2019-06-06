@@ -1,0 +1,6 @@
+{
+    "require": {
+        "google/apiclient": "^2.0",
+        "spotonlive/php-google-my-business": "^4.3"
+    }
+}
