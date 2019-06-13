@@ -43,28 +43,29 @@ As of version 0.3.0, this tool can update hours for a single location on Google 
 
 To configure this function, you'll need to first set up access to the API...
 
-To find g_client_id:
+1. To find g_client_id:
 https://console.developers.google.com/apis/dashboard?project=wittlibrary-hours
 > APIs & Services > Dashboard > Google My Business API > Credentials >
 create a credential for a web application
 
-To get the refresh token, go to the Google OAuth Playground:
+2. To get the refresh token, go to the Google OAuth Playground:
 https://developers.google.com/oauthplayground
-Using the gear icon in the upper right select:
-OAuth flow: server-side
-Access type; offline
-Check the box that says "Use your own OAuth credentials"
-add the OAuth Client ID & Client secret where indicated
-The select "Step 1: Select & Authorize APIs" on the left
-Put in the "Input your own scopes" box below input:
- https://www.googleapis.com/auth/plus.business.manage
-Click Authorize APIs
-In the next screen click the "Exchange authorization code for tokens"
-Now copy the "Refresh Token" that results.
-Wasn't that simple?
 
-Add the appropriate information to the config.php file.
-Then run set_google_hours.php on a weekly basis using a cron job.
+Using the gear icon in the upper right select:
+a. OAuth flow: server-side 
+b. Access type; offline
+c. Check the box that says "Use your own OAuth credentials"
+d. add the OAuth Client ID & Client secret where indicated
+e. The select "Step 1: Select & Authorize APIs" on the left
+f. Put in the "Input your own scopes" box below input:
+ https://www.googleapis.com/auth/plus.business.manage
+g. Click Authorize APIs
+
+h. In the next screen click the "Exchange authorization code for tokens"
+i. Now copy the "Refresh Token" that results.
+
+3. Add the appropriate information to the config.php file.
+4. Then run set_google_hours.php on a weekly basis using a cron job.
 
 
 ## Database Tables
