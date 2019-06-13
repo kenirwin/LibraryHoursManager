@@ -1,7 +1,6 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-//header('Content-type: text/plain');
 
 require_once './vendor/autoload.php';
 require_once 'config.php';
@@ -10,6 +9,7 @@ use Google_Client;
 use Google_Service_MyBusiness;
 
 include ("hours.class.php");
+define ('G_SCOPE','https://www.googleapis.com/auth/plus.business.manage');
 
 /* Settings */
 

@@ -14,7 +14,7 @@ define ('PASS', $password);
 define ('CHARSET', $charset);
 
 define ('ERRORS_TO', ''); //an email address
-define ('G_SCOPE','https://www.googleapis.com/auth/plus.business.manage');
+
 define ('G_REFRESH_TOKEN',''); //get refresh token from Google 
 define ('G_CLIENT_SECRET_FILE',''); //root-relative location of google client secret file
 define ('G_MYBIZ_ACCOUNT',''); // google mybusiness account number, should be something like 'accounts/123456789'
