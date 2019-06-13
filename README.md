@@ -37,6 +37,14 @@ You can copy the **GetXML-sample.sh** to **GetXML.sh** and uncomment a method th
 
 Use the `calendar.php` file to read the resulting static `hours.xml` file.
 
+### Updating Google
+
+As of version 0.3.0, this tool can update hours for a single location on Google MyBusiness using the Google MyBusiness API. 
+
+To configure this function, you'll need to first set up access to the API...
+Add the appropriate information to the config.php file.
+Then run set_google_hours.php on a weekly basis using a cron job.
+
 
 ## Database Tables
 
