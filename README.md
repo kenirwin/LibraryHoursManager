@@ -52,17 +52,17 @@ create a credential for a web application
 https://developers.google.com/oauthplayground
 
 Using the gear icon in the upper right select:
-a. OAuth flow: server-side 
-b. Access type; offline
-c. Check the box that says "Use your own OAuth credentials"
-d. add the OAuth Client ID & Client secret where indicated
-e. The select "Step 1: Select & Authorize APIs" on the left
-f. Put in the "Input your own scopes" box below input:
+* OAuth flow: server-side 
+* Access type; offline
+* Check the box that says "Use your own OAuth credentials"
+* add the OAuth Client ID & Client secret where indicated
+* The select "Step 1: Select & Authorize APIs" on the left
+* Put in the "Input your own scopes" box below input:
  https://www.googleapis.com/auth/plus.business.manage
-g. Click Authorize APIs
+* Click Authorize APIs
 
-h. In the next screen click the "Exchange authorization code for tokens"
-i. Now copy the "Refresh Token" that results.
+* In the next screen click the "Exchange authorization code for tokens"
+* Now copy the "Refresh Token" that results.
 
 3. Add the appropriate information to the config.php file.
 4. Then run set_google_hours.php on a weekly basis using a cron job.
