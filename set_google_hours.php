@@ -11,24 +11,23 @@ use Google_Service_MyBusiness;
 
 include ("hours.class.php");
 
+/* Settings */
 
-/* Get hours from this app */
-
-$hours = new Hours;
 $start_date = date('Y-m-d');
 $end_date = AddDays($start_date,7);
 $special_start_date = AddDays($end_date,1);
 $special_end_date = AddDays($start_date,120); // four months ahead for special date inclusion
 
+
+/* Get hours from this app */
+$hours = new Hours;
 $dates = $hours->ListDatesInRange($start_date,$end_date);
 $special_dates = $hours->ListDatesInRange($special_start_date,$special_end_date);
-
 $distinct_timeframes = $hours->CountTimeframesInSpan($start_date,$end_date);
 if ($distinct_timeframes == 1) {
     //get regular hours
     if (isset($hours->preset_id)) {
         $reg = $hours->getCurrentRegularHours();
-        //        print_r($reg);
     }
 }
 
@@ -62,7 +61,6 @@ try {
     $account = $mybiz->accounts->get(G_MYBIZ_ACCOUNT);
     $location = $mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0];
     $before = print_r($location,true);
-    print '<hr>';
 } catch (Exception $e) {
     print ('Trouble connecting to Google: ' . $e->getMessage());
 }
@@ -113,7 +111,7 @@ try {
 
     $after = print_r($mybiz->accounts_locations->listAccountsLocations(G_MYBIZ_ACCOUNT)->locations[0],true);
 } catch (Exception $e) {
-    print 'Trouble updating Google model: '.$e->getMessage();
+    HandleException('Trouble updating Google model: '.$e->getMessage(), __LINE__);
 }
 
 try {
@@ -125,9 +123,15 @@ try {
         print_r($response);
     }
 } catch (Exception $e) {
-    print $e->getMessage();
+    HandleException('Failed to Update Google Hours:'. $e->getMessage(), __LINE__);
 }
 
+function HandleException($message, $line = null) {
+    $body = 'Error updating Google Business Hours:'.PHP_EOL;
+    $body.= __FILE__ . ' , line: ' . $line . PHP_EOL . PHP_EOL;
+    $body.= $message;
+    mail (ERRORS_TO, 'Error updating Google Business Hours', $body);
+}
 
 function AddDays($start_date, $days) {
     return date('Y-m-d', strtotime($start_date . ' + '.$days.' days'));
