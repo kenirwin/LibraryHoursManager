@@ -214,14 +214,18 @@ class Hours {
     private function GooglizeRows($rows) {
         $info = array();
         foreach ($rows as $row) {
-            $day = $row['day'];
-            $info[$day]['opentime'] = date('H:i', strtotime($row['opentime']));
-            $info[$day]['closetime'] = date('H:i', strtotime($row['closetime']));
-            $info[$day]['openday'] = $day;
-            if ($row['latenight'] == 'Y') {
-                $info[$day]['closeday'] = $this->nextDayOfWeek($day);
-            }
-            else { $info[$day]['closeday'] = $day; }
+            // omit info for days when closed
+            // that's how google likes it
+            if ($row['closed'] == 'N') {
+                $day = $row['day'];
+                $info[$day]['opentime'] = date('H:i', strtotime($row['opentime']));
+                $info[$day]['closetime'] = date('H:i', strtotime($row['closetime']));
+                $info[$day]['openday'] = $day;
+                if ($row['latenight'] == 'Y') {
+                    $info[$day]['closeday'] = $this->nextDayOfWeek($day);
+                }
+                else { $info[$day]['closeday'] = $day; }
+            } 
         }
         return $info;
     }

@@ -70,12 +70,13 @@ try {
     /* do regular hours */
     $reg_hours = new Google_Service_MyBusiness_BusinessHours;
     $periods = array();
-    foreach ($hours->Days() as $day) {
+    //    foreach ($hours->Days() as $day) {
+    foreach ($reg as $day) {
         $period = new Google_Service_MyBusiness_TimePeriod;
-        $period->setOpenDay($reg[$day]['openday']);
-        $period->setOpenTime($reg[$day]['opentime']);
-        $period->setCloseDay($reg[$day]['closeday']);
-        $period->setCloseTime($reg[$day]['closetime']);
+        $period->setOpenDay($day['openday']);
+        $period->setOpenTime($day['opentime']);
+        $period->setCloseDay($day['closeday']);
+        $period->setCloseTime($day['closetime']);
         array_push($periods, $period);
     }
     $reg_hours->setPeriods($periods);
@@ -117,7 +118,7 @@ try {
 
 try {
     $opts = array();
-    $opts = array('validateOnly'=>true);
+    //    $opts = array('validateOnly'=>true);
     $response = $mybiz->accounts_locations->patch($location->name, $location, $opts);
     if (isset($response)) {
         print 'Update response from Google: ';
