@@ -25,6 +25,11 @@ $dates = $hours->ListDatesInRange($start_date,$end_date);
 $special_dates = $hours->ListDatesInRange($special_start_date,$special_end_date);
 $distinct_timeframes = $hours->CountTimeframesInSpan($start_date,$end_date);
 
+/* 
+   If only one timeframe this week, get the regular hours 
+   Otherwise, just show inidividual hours for each day as "special hours"
+*/
+
 if ($distinct_timeframes == 1) {
     //get regular hours
     if (isset($hours->preset_id)) {
@@ -71,16 +76,18 @@ try {
     $reg_hours = new Google_Service_MyBusiness_BusinessHours;
     $periods = array();
     //    foreach ($hours->Days() as $day) {
-    foreach ($reg as $day) {
-        $period = new Google_Service_MyBusiness_TimePeriod;
-        $period->setOpenDay($day['openday']);
-        $period->setOpenTime($day['opentime']);
-        $period->setCloseDay($day['closeday']);
-        $period->setCloseTime($day['closetime']);
-        array_push($periods, $period);
+    if (is_array($reg)) {
+        foreach ($reg as $day) {
+            $period = new Google_Service_MyBusiness_TimePeriod;
+            $period->setOpenDay($day['openday']);
+            $period->setOpenTime($day['opentime']);
+            $period->setCloseDay($day['closeday']);
+            $period->setCloseTime($day['closetime']);
+            array_push($periods, $period);
+        }
+        $reg_hours->setPeriods($periods);
+        $location->setRegularHours($reg_hours); 
     }
-    $reg_hours->setPeriods($periods);
-    $location->setRegularHours($reg_hours); 
     
     //    print_r($location);
     /* now update special hours */
