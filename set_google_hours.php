@@ -5,8 +5,8 @@ ini_set('display_errors', 1);
 require_once './vendor/autoload.php';
 require_once 'config.php';
 
-use Google_Client;
-use Google_Service_MyBusiness;
+//use Google_Client;
+//use Google_Service_MyBusiness;
 
 include ("hours.class.php");
 define ('G_SCOPE','https://www.googleapis.com/auth/plus.business.manage');
@@ -14,9 +14,9 @@ define ('G_SCOPE','https://www.googleapis.com/auth/plus.business.manage');
 /* Settings */
 
 $start_date = date('Y-m-d');
-$end_date = AddDays($start_date,7);
+$end_date = AddDays($start_date,7); // only get regular hours for the coming week
 $special_start_date = AddDays($end_date,1);
-$special_end_date = AddDays($start_date,120); // four months ahead for special date inclusion
+$special_end_date = AddDays($start_date,120); // get irregular hours for next 4 months
 
 
 /* Get hours from this app */
@@ -24,6 +24,7 @@ $hours = new Hours;
 $dates = $hours->ListDatesInRange($start_date,$end_date);
 $special_dates = $hours->ListDatesInRange($special_start_date,$special_end_date);
 $distinct_timeframes = $hours->CountTimeframesInSpan($start_date,$end_date);
+
 if ($distinct_timeframes == 1) {
     //get regular hours
     if (isset($hours->preset_id)) {

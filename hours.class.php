@@ -34,7 +34,7 @@ class Hours {
         $next = $start;
         $finished = false;
         while (! $finished) {
-            array_push($dates, $next);
+           array_push($dates, $next);
             if ($next == $end) {
                 $finished = true;
             }
@@ -182,15 +182,23 @@ class Hours {
     } 
     
     public function CountTimeframesInSpan($first,$last) {
-        $q = "SELECT * FROM  `timeframes` , `presets` WHERE `presets`.`rank` = 1 AND `timeframes`.`apply_preset_id` = `presets`.`id` and `first_date` < ? and `last_date` > ? ";
+        $dates = $this->ListDatesInRange($first,$last);
+        $wheres = array();
+        $args = array();
+        foreach ($dates as $d) {
+            array_push($wheres, "(? BETWEEN `first_date` AND `last_date`)");
+            array_push($args, $d);
+        }
+        $where_query = join ($wheres, ' OR ');
+        $q = "SELECT * FROM  `timeframes` WHERE $where_query ";
         $stmt = $this->db->prepare($q);
-        $stmt->execute(array($last,$first));
+        $stmt->execute($args);
         $count = $stmt->rowCount();
         if ($count == 1) { 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->preset_id = $row['apply_preset_id'];
         }
-        return $stmt->rowCount();
+        return $count;
     }
 
     public function GetCurrentRegularHours() {
